@@ -4,32 +4,53 @@ React = window.React
 
 Guitar = React.createClass
     displayName: "Guitar"
-    render: ->
-        strings = [1..6].map (num) ->
-            data = {num}
+    pressStringFrets: (tabs) ->
+        (@pressStringFret sNum, fNum) for [sNum, fNum] in tabs
+    pressStringFret: (stringNum, fretNum) ->
+        @state.data[stringNum-1].pressFret(fretNum)
+    getInitialState: ->
+        strings = [1..@props.data.stringsNum].map (num) =>
+            data = {num, fretsNum: @props.data.fretsNum}
             GString {data}
-        div {className: "guitar"}, strings
+        {data: strings}
+    render: ->
+        div {className: "guitar"}, @state.data
 
 
 GString = React.createClass
     displayName: "GString"
+    pressFret: (fretNum) ->
+        @state.data[fretNum-1].press()
+    getInitialState: ->
+        frets = [1..@props.data.fretsNum].map (num) =>
+            Fret {data: {checked: false, num, stringNum: @props.data.num}}
+        {data: frets}
     render: ->
-        component = @
-        fretNodes = [1..16].map (num) ->
-
-            data = {checked: false, num, stringNum: component.props.data.num}
-            Fret {data}
-        ul {className: "string"}, fretNodes
+        ul {className: "string"}, @state.data
 
 
 Fret = React.createClass
     displayName: "Fret"
-    render: ->
+    press: -> @setState {className: "on"}
+    getInitialState: ->
         className = if @props.data.checked then "on" else "off"
-        li {className: "#{className} fret", "data-fret-num": @props.data.num}
+        {className, fretNum: @props.data.num}
+    render: ->
+        li {className: "#{@state.className} fret", "data-fret-num": @state.fretNum}
 
 
+guitar = Guitar {data:{fretsNum: 16, stringsNum: 6}}
 React.renderComponent(
-    Guitar()
+    guitar
     document.getElementById "container"
 )
+
+tabs = [
+    [1, 2]
+    [1, 4]
+    [1, 6]
+    [2, 3]
+    [3, 4]
+]
+
+guitar.pressStringFrets tabs
