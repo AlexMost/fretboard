@@ -1,4 +1,4 @@
-React = window.React
+React = require('react')
 {div, li, ul} = React.DOM
 
 

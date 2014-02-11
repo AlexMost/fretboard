@@ -12,6 +12,13 @@ module.exports = (grunt) ->
             files: "src/*.coffee"
             tasks: ["coffee"]
 
+        stitch:
+            options:
+                paths: ['lib-js/', 'lib/']
+                dest: 'public/app.js'
+
     grunt.loadNpmTasks "grunt-contrib-watch"
     grunt.loadNpmTasks "grunt-contrib-coffee"
-    grunt.registerTask "build", ["coffee:src"]
+    grunt.loadNpmTasks "grunt-stitch"
+
+    grunt.registerTask "build", ["coffee:src", "stitch"]

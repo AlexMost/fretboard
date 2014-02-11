@@ -1,4 +1,5 @@
 lib-js/**
 node_modules/**
+public/**
 .idea/**
 .DS_Store
