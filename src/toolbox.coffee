@@ -14,10 +14,17 @@ Option = React.createClass
 
 Dropdown = React.createClass
     displayName: "Dropdown"
+    getDefaultProps: ->
+        onChange: ->
     changeHandler: (event) -> @props.onChange {value: @getValue()}
     getValue: -> @refs.select.getDOMNode().value
     getInitialState: ->
-        {options: [Option({data: {value:1, text: "opt1"}}), Option()]}
+        unless @props.data?.options
+            {options: [Option({data: {value:1, text: "opt1"}}), Option()]}
+        else
+            options = @props.data.options.map ([value, text]) ->
+                Option {data: {value, text}}
+            {options}
     render: ->
         select {ref:"select", onChange: @changeHandler}, @state.options
 
