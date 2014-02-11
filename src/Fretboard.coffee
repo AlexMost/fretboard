@@ -9,8 +9,10 @@ Guitar = React.createClass
     pressStringFret: (stringNum, fretNum) ->
         @state.data[stringNum-1].pressFret(fretNum)
     getInitialState: ->
-        strings = [1..@props.data.stringsNum].map (num) =>
-            data = {num, fretsNum: @props.data.fretsNum}
+        stringsNum = @props.data?.stringsNum or 6
+        fretsNum = @props.data?.fretsNum or 16
+        strings = [1..stringsNum].map (num) =>
+            data = {num, fretsNum}
             GString {data}
         {data: strings}
     render: ->
@@ -39,7 +41,7 @@ Fret = React.createClass
         li {className: "#{@state.className} fret", "data-fret-num": @state.fretNum}
 
 
-guitar = Guitar {data:{fretsNum: 16, stringsNum: 6}}
+guitar = Guitar()
 React.renderComponent(
     guitar
     document.getElementById "container"
