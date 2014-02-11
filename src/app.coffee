@@ -1,18 +1,20 @@
 {Guitar} = require 'fretboard'
+{Dropdown} = require 'toolbox'
 React = require 'react'
+{div} = React.DOM
 
-guitar = Guitar()
+
+React.renderComponent Guitar(), document.getElementById "container"
+
+
+handleDropdownChange = (args) ->
+    console.log "Value changed #{args.value}"
+
+
 React.renderComponent(
-    guitar
-    document.getElementById "container"
+    (div {},
+        (Dropdown {onChange: handleDropdownChange}),
+        (Dropdown {}))
+
+    document.getElementById "toolbar"
 )
-
-tabs = [
-    [1, 2]
-    [1, 4]
-    [1, 6]
-    [2, 3]
-    [3, 4]
-]
-
-guitar.pressStringFrets tabs
