@@ -40,19 +40,4 @@ Fret = React.createClass
     render: ->
         li {className: "#{@state.className} fret", "data-fret-num": @state.fretNum}
 
-
-guitar = Guitar()
-React.renderComponent(
-    guitar
-    document.getElementById "container"
-)
-
-tabs = [
-    [1, 2]
-    [1, 4]
-    [1, 6]
-    [2, 3]
-    [3, 4]
-]
-
-guitar.pressStringFrets tabs
+module.exports = {Guitar, GString, Fret}
