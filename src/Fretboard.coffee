@@ -3,6 +3,7 @@ React = window.React
 
 
 Guitar = React.createClass
+    displayName: "Guitar"
     render: ->
         strings = [1..6].map (num) ->
             data = {num}
@@ -11,6 +12,7 @@ Guitar = React.createClass
 
 
 GString = React.createClass
+    displayName: "GString"
     render: ->
         component = @
         fretNodes = [1..16].map (num) ->
@@ -21,6 +23,7 @@ GString = React.createClass
 
 
 Fret = React.createClass
+    displayName: "Fret"
     render: ->
         className = if @props.data.checked then "on" else "off"
         li {className: "#{className} fret", "data-fret-num": @props.data.num}
