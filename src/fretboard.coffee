@@ -10,13 +10,13 @@ Guitar = React.createClass
         tabs = @state?.data?.tabs
         stringsNum = @props.data?.stringsNum or 6
         fretsNum = @props.data?.fretsNum or 16
+
         strings = [1..stringsNum].map (num) =>
             frets = if tabs
                 tabs.filter(([sN, fN]) -> sN is num).map ([sN, fN]) -> fN
             else
                 []
-            data = {num, fretsNum, frets}
-            GString {data}
+            GString {data:{num, fretsNum, frets}}
         div {className: "guitar"}, strings
 
 
