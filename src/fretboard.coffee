@@ -4,19 +4,12 @@ React = require('react')
 
 Guitar = React.createClass
     displayName: "Guitar"
-    pressStringFrets: (tabs) ->
-        stringsNum = @props.data?.stringsNum or 6
-        fretsNum = @props.data?.fretsNum or 16
-        strings = [1..stringsNum].map (num) =>
-            frets = tabs.filter(([sN, fN]) -> sN is num).map ([sN, fN]) -> fN
-            data = {num, fretsNum, frets}
-            GString {data}
-        @setState {data: strings}
+    pressStringFrets: (tabs) -> @setState {data: {tabs}}
 
-    getInitialState: ->
+    render: ->
+        tabs = @state?.data?.tabs
         stringsNum = @props.data?.stringsNum or 6
         fretsNum = @props.data?.fretsNum or 16
-        tabs = @props.data?.tabs
         strings = [1..stringsNum].map (num) =>
             frets = if tabs
                 tabs.filter(([sN, fN]) -> sN is num).map ([sN, fN]) -> fN
@@ -24,10 +17,7 @@ Guitar = React.createClass
                 []
             data = {num, fretsNum, frets}
             GString {data}
-        {data: strings}
-
-    render: ->
-        div {className: "guitar"}, @state.data
+        div {className: "guitar"}, strings
 
 
 GString = React.createClass
