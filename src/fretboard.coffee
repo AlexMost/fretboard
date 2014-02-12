@@ -34,14 +34,14 @@ GString = React.createClass
                 ""
             Fret {data: {checked, num, stringNum: @props.data.num, note}}
 
-        ul {className: "string"}, frets
+        div {className: "row string"}, frets
 
 
 Fret = React.createClass
     displayName: "Fret"
     render: ->
         className = if @props.data.checked then "on" else "off"
-        li {className: "#{className} fret"}, @props.data.note
+        div {className: "col-md-1 fret #{className}"}, @props.data.note
 
 
 module.exports = {Guitar, GString, Fret}

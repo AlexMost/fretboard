@@ -1,16 +1,16 @@
-.guitar {
-    margin: 0px;
-    padding: 0px;
+.string {
+    border-bottom: 1px solid gray;
 }
 
 .fret {
-    margin: 0px;
-    padding: 0px;
-    width: 50px;
+    border-right: 1px solid black;
     height: 30px;
-    border-right: 2px solid black;
-    list-style-type: none;
-    display: inline-block;
+    width: 40px;
+}
+
+.guitar {
+    width: 900px;
+    margin: auto;
 }
 
 .on {
@@ -19,17 +19,4 @@
 
 .off {
     background: none;
-}
-
-.string {
-    margin: 0px;
-    padding: 0px;
-    margin-bottom: -3px;
-}
-
-#container {
-    border: 1px solid gray;
-    width: 900px;
-    margin: auto;
-    margin-top: 100px;
 }
