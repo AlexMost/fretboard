@@ -1,6 +1,7 @@
 React = require 'react'
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul} = React.DOM
+{play_fret} = require 'notes_sound'
 
 
 Guitar = React.createClass
@@ -39,9 +40,11 @@ GString = React.createClass
 
 Fret = React.createClass
     displayName: "Fret"
+    play: ->
+        play_fret @props.data.stringNum, @props.data.num
     render: ->
         className = if @props.data.checked then "on" else "off"
-        div {className: "col-md-1 fret #{className}"}, @props.data.note
+        div {className: "col-md-1 fret #{className}", onClick: @play}, @props.data.note
 
 
 module.exports = {Guitar, GString, Fret}
