@@ -20,3 +20,7 @@
 .off {
     background: none;
 }
+
+.playing {
+    background: green;
+}

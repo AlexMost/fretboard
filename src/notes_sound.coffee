@@ -3,12 +3,12 @@
 sounds_cache = {1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}}
 
 
-play_fret = (sNum, fNum) ->
+play_fret = (sNum, fNum, cb) ->
     cacheSound = sounds_cache[sNum][fNum]
     if cacheSound
-        cacheSound.play()
+        cacheSound.play cb
     else
-        sound = get_sound sNum, fNum, -> sound.play()
+        sound = get_sound sNum, fNum, -> sound.play cb
         sounds_cache[sNum][fNum] = sound
 
 

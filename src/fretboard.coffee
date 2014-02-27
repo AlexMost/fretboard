@@ -1,11 +1,18 @@
 React = require 'react'
+async = require 'async'
+
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul} = React.DOM
 {play_fret} = require 'notes_sound'
 
 
-blFret = (sNum, fNum, note, checked) ->
-    data: -> {sNum, fNum, note, checked}
+blFret = (sNum, fNum, note, checked, playing) ->
+    checked or= false
+    playing or= false
+
+    data: -> {sNum, fNum, note, checked, playing}
+    playStart: -> playing = true
+    playStop: -> playing = false
     check: -> checked = true
     uncheck: -> checked = false
 
@@ -25,17 +32,40 @@ getClearFrets = (sNum, fNum, notesMap) ->
 
 Guitar = React.createClass
     displayName: "Guitar"
+    startPlayFret: ([sNum, fNum]) ->
+        frets = @state.frets
+        frets[sNum][fNum].playStart()
+        @setState {frets}
+
+    stopPlayFret: ([sNum, fNum]) ->
+        frets = @state.frets
+        frets[sNum][fNum].playStop()
+        @setState {frets}
+
+    playScale: ->
+        self = @
+        iterator = ([sNum, fNum], cb) ->
+            self.startPlayFret [sNum, fNum]
+            play_fret sNum, fNum, ->
+                setTimeout(
+                    ->
+                        self.stopPlayFret [sNum, fNum]
+                        cb?()
+                    self.state.timeout)
+        async.mapSeries @state.tabs, iterator, ->
+
     pressStringFrets: (tabs) ->
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
         frets[sNum][fNum].check() for [sNum, fNum] in tabs
-        @setState {frets}
+        @setState {frets, tabs}
 
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
         fretsNum = @props.data?.fretsNum or 16
         notesMap = generateNotes stringsNum, fretsNum, STANDART_TUNING
         frets = getClearFrets stringsNum, fretsNum, notesMap
-        {stringsNum, fretsNum, notesMap, frets}
+        timeout = 500
+        {stringsNum, fretsNum, notesMap, frets, timeout}
 
     render: ->
         strings = [0..@state.stringsNum].map (num) =>
@@ -57,7 +87,8 @@ Fret = React.createClass
     render: ->
         className = if @props.data.checked then "on" else "off"
         text = if @props.data.checked then @props.data.note else ''
-        div {className: "col-md-1 fret #{className}"}, text
+        playClass = if @props.data.playing then "playing" else ''
+        div {className: "col-md-1 fret #{className} #{playClass}"}, text
 
 
 module.exports = {Guitar, GString, Fret}
