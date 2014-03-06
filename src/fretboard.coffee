@@ -4,6 +4,8 @@ async = require 'async'
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul} = React.DOM
 {play_fret} = require 'notes_sound'
+Draggable = require 'draggable'
+$ = require 'jquery'
 
 
 blFret = (sNum, fNum, note, checked, playing) ->
@@ -31,9 +33,18 @@ getClearFrets = (sNum, fNum, notesMap) ->
 
 Selector = React.createClass
     displayName: "Selector"
-    getInitialState: ->
+    mixins: [Draggable({useY:false, useX: true})]
     render: ->
-        div {className: "col-md-4 selector", style: {height: 187}}
+        div
+            className: "col-md-4 selector",
+            style:
+                height: 187
+                left: @state.pos.x + 'px'
+                top: @state.pos.y + 'px'
+                position: 'absolute'
+            onMouseDown: @onMouseDown,
+            onMouseUp: @onMouseUp,
+            onClick: @click
 
 
 Guitar = React.createClass
@@ -47,6 +58,9 @@ Guitar = React.createClass
         frets = @state.frets
         frets[sNum][fNum].playStop()
         @setState {frets}
+
+    componentDidMount: ->
+        @setState {selector: Selector()}
 
     playScale: ->
         self = @
@@ -71,12 +85,13 @@ Guitar = React.createClass
         notesMap = generateNotes stringsNum, fretsNum, STANDART_TUNING
         frets = getClearFrets stringsNum, fretsNum, notesMap
         timeout = 500
-        {stringsNum, fretsNum, notesMap, frets, timeout}
+        selector = null
+        {stringsNum, fretsNum, notesMap, frets, timeout, selector}
 
     render: ->
         strings = [0..@state.stringsNum].map (num) =>
             GString {data: {frets: @state.frets[num]}}
-        div {className: "guitar"}, [Selector(), strings]
+        div {className: "guitar"}, [@state.selector, strings]
 
 
 GString = React.createClass

@@ -9,9 +9,9 @@
 }
 
 .guitar {
+    z-index: 1;
     width: 900px;
     margin: auto;
-    position:relative;
 }
 
 .on {
@@ -27,8 +27,9 @@
 }
 
 .selector {
+    z-index: 10;
+    cursor: move;
     border: 5px solid greenyellow;
-    position: absolute;
     padding: 0px;
     width: 160px;
     margin-left: -15px;
