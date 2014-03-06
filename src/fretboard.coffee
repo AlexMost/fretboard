@@ -29,6 +29,12 @@ getClearFrets = (sNum, fNum, notesMap) ->
             frets[i][j] = blFret i, j, notesMap[i][j], false
     frets
 
+Selector = React.createClass
+    displayName: "Selector"
+    getInitialState: ->
+    render: ->
+        div {className: "col-md-4 selector", style: {height: 187}}
+
 
 Guitar = React.createClass
     displayName: "Guitar"
@@ -70,7 +76,7 @@ Guitar = React.createClass
     render: ->
         strings = [0..@state.stringsNum].map (num) =>
             GString {data: {frets: @state.frets[num]}}
-        div {className: "guitar"}, strings
+        div {className: "guitar"}, [Selector(), strings]
 
 
 GString = React.createClass

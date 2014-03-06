@@ -11,6 +11,7 @@
 .guitar {
     width: 900px;
     margin: auto;
+    position:relative;
 }
 
 .on {
@@ -23,4 +24,12 @@
 
 .playing {
     background: green;
+}
+
+.selector {
+    border: 5px solid greenyellow;
+    position: absolute;
+    padding: 0px;
+    width: 160px;
+    margin-left: -15px;
 }
