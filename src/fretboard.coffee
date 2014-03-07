@@ -60,7 +60,8 @@ Guitar = React.createClass
         @setState {frets}
 
     componentDidMount: ->
-        @setState {selector: Selector()}
+        offset = $(@getDOMNode()).offset()
+        @setState {selector: Selector({initialPos: {x: offset.left, y: offset.top}})}
 
     playScale: ->
         self = @
