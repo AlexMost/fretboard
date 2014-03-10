@@ -4,7 +4,7 @@ async = require 'async'
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul} = React.DOM
 {play_fret} = require 'notes_sound'
-Draggable = require 'draggable'
+Selector = require 'selector'
 $ = require 'jquery'
 
 
@@ -30,22 +30,6 @@ getClearFrets = (sNum, fNum, notesMap) ->
         for j in [1..fNum]
             frets[i][j] = blFret i, j, notesMap[i][j], false
     frets
-
-Selector = React.createClass
-    displayName: "Selector"
-    mixins: [Draggable({useY:false, useX: true})]
-    render: ->
-        div
-            className: "col-md-4 selector",
-            style:
-                height: 187
-                left: @state.pos.x + 'px'
-                top: @state.pos.y + 'px'
-                position: 'absolute'
-            onMouseDown: @onMouseDown,
-            onMouseUp: @onMouseUp,
-            onClick: @click
-
 
 Guitar = React.createClass
     displayName: "Guitar"
