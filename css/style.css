@@ -4,8 +4,6 @@
 
 .fret {
     border-right: 1px solid black;
-    height: 30px;
-    width: 40px;
 }
 
 .guitar {
@@ -31,6 +29,5 @@
     cursor: move;
     border: 5px solid greenyellow;
     padding: 0px;
-    width: 160px;
     margin-left: -15px;
 }

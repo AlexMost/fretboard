@@ -8,15 +8,18 @@ Selector = require 'selector'
 $ = require 'jquery'
 
 
-blFret = (sNum, fNum, note, checked, playing) ->
+blFret = (sNum, fNum, note, checked, playing, selected) ->
     checked or= false
     playing or= false
+    selected or=false
 
-    data: -> {sNum, fNum, note, checked, playing}
+    data: -> {sNum, fNum, note, checked, playing, selected}
     playStart: -> playing = true
     playStop: -> playing = false
     check: -> checked = true
     uncheck: -> checked = false
+    select: -> selected = true
+    unselect: -> selected = false
 
 
 blString = (sNum, frets) ->
@@ -55,8 +58,8 @@ Guitar = React.createClass
             height: jnode_height
             width: 160
             minX
-            maxX
-        }}
+            maxX}
+        }
 
     playScale: ->
         self = @
@@ -84,11 +87,20 @@ Guitar = React.createClass
         selector = null
         {stringsNum, fretsNum, notesMap, frets, timeout, selector}
 
+    onSelectorMove: (x) ->
+
     render: ->
         strings = [0..@state.stringsNum].map (num) =>
-            GString {data: {frets: @state.frets[num]}}
+            GString
+                data:
+                    frets: @state.frets[num]
+                Fwidth: @props.fretWidth
+                Fheight: @props.fretHeight
+
         selector = if @state.selector
-            Selector @state.selector
+            selector_data = @state.selector
+            selector_data["onXChange"] = @onSelectorMove
+            Selector selector_data
 
         div {className: "guitar"}, [selector, strings]
 
@@ -96,7 +108,14 @@ Guitar = React.createClass
 GString = React.createClass
     displayName: "GString"
     render: ->
-        frets = [Fret {data: fret.data()} for fNum, fret of @props.data.frets]
+        self = @
+        make_fret = (fret) ->
+            Fret
+                data: fret.data()
+                width: self.props.Fwidth
+                height: self.props.Fheight
+
+        frets = [make_fret(fret)for fNum, fret of @props.data.frets]
         div {className: "row string"}, frets
 
 
@@ -108,7 +127,13 @@ Fret = React.createClass
         className = if @props.data.checked then "on" else "off"
         text = if @props.data.checked then @props.data.note else ''
         playClass = if @props.data.playing then "playing" else ''
-        div {className: "col-md-1 fret #{className} #{playClass}"}, text
 
+        attrs =
+            className: "col-md-1 fret #{className} #{playClass}"
+            style:
+                width: @props.width
+                height: @props.height
+
+        div attrs, text
 
 module.exports = {Guitar, GString, Fret}

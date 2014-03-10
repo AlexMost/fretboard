@@ -47,8 +47,10 @@ Draggable = ({useX, useY, minX, maxX}) ->
         {minX, maxX} = @props
         if useX and newX >= minX and newX <= maxX
             pos.x = newX
+            @props.onXChange?(pos.x)
         else if newX <= minX
             pos.x = minX
+            @props.onXChange?(pos.x)
 
         @setState {pos}
         e.stopPropagation()
