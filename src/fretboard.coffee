@@ -31,7 +31,7 @@ getClearFrets = (sNum, fNum, notesMap) ->
     for i in [1..sNum]
         frets[i] = {}
         for j in [1..fNum]
-            frets[i][j] = blFret i, j, notesMap[i][j], false
+            frets[i][j] = blFret i, j, notesMap[i][j], false, false
     frets
 
 Guitar = React.createClass
@@ -83,11 +83,20 @@ Guitar = React.createClass
         fretsNum = @props.data?.fretsNum or 16
         notesMap = generateNotes stringsNum, fretsNum, STANDART_TUNING
         frets = getClearFrets stringsNum, fretsNum, notesMap
-        timeout = 500
+        timeout = 200
         selector = null
         {stringsNum, fretsNum, notesMap, frets, timeout, selector}
 
     onSelectorMove: (x) ->
+        frets = @state.frets
+        for sNum, string of frets
+            for fNum, fret of string
+                fret_offset = @state.selector.initialPos.x + fNum * @props.fretWidth
+                if fret_offset >= x and fret_offset <= x + 160
+                    fret.select()
+                else
+                    fret.unselect()
+        @setState {frets}
 
     render: ->
         strings = [0..@state.stringsNum].map (num) =>
@@ -127,6 +136,8 @@ Fret = React.createClass
         className = if @props.data.checked then "on" else "off"
         text = if @props.data.checked then @props.data.note else ''
         playClass = if @props.data.playing then "playing" else ''
+        if @props.data.selected
+            text = 's'
 
         attrs =
             className: "col-md-1 fret #{className} #{playClass}"
