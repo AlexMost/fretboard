@@ -60,7 +60,15 @@ Guitar = React.createClass
         @setState {frets}
 
     componentDidMount: ->
-        @setState {selector: Selector()}
+        jnode = $(@getDOMNode())
+        offset = jnode.offset()
+        minX = offset.left
+        maxX = offset.left + jnode.width()
+        @setState {selector: {
+            initialPos: {x: offset.left, y: offset.top}
+            minX
+            maxX
+        }}
 
     playScale: ->
         self = @
@@ -91,7 +99,10 @@ Guitar = React.createClass
     render: ->
         strings = [0..@state.stringsNum].map (num) =>
             GString {data: {frets: @state.frets[num]}}
-        div {className: "guitar"}, [@state.selector, strings]
+        selector = if @state.selector
+            Selector @state.selector
+
+        div {className: "guitar"}, [selector, strings]
 
 
 GString = React.createClass

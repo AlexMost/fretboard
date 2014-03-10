@@ -1,7 +1,7 @@
 React = require 'react'
 $ = require 'jquery'
 
-Draggable = ({useX, useY, bounds}) ->
+Draggable = ({useX, useY, minX, maxX}) ->
     getDefaultProps: ->
         initialPos: {x: 270, y: 141}
 
@@ -23,10 +23,13 @@ Draggable = ({useX, useY, bounds}) ->
         pos = $(@getDOMNode()).offset()
 
         rel = {}
-        if useX
+        newX = e.pageX
+        {minX, maxX} = @props
+        console.log useX, newX, minX, maxX
+        if useX and newX >= minX and newX <= maxX
             rel.x = e.pageX - pos.left
-        if useY
-            rel.y = e.pageY - pos.top
+        else if newX <= minX
+            rel.x = minX
 
         @setState {dragging: true, rel}
         e.stopPropagation()
@@ -41,10 +44,12 @@ Draggable = ({useX, useY, bounds}) ->
         return unless @state.dragging
 
         pos = {}
-        if useX
-            pos.x = e.pageX - @state.rel.x
-        if useY
-            pos.y = e.pageY - @state.rel.y
+        newX = e.pageX - @state.rel.x
+        {minX, maxX} = @props
+        if useX and newX >= minX and newX <= maxX
+            pos.x = newX
+        else if newX <= minX
+            pos.x = minX
 
         @setState {pos}
         e.stopPropagation()
