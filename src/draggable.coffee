@@ -25,7 +25,6 @@ Draggable = ({useX, useY, minX, maxX}) ->
         rel = {}
         newX = e.pageX
         {minX, maxX} = @props
-        console.log useX, newX, minX, maxX
         if useX and newX >= minX and newX <= maxX
             rel.x = e.pageX - pos.left
         else if newX <= minX

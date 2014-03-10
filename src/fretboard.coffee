@@ -46,10 +46,14 @@ Guitar = React.createClass
     componentDidMount: ->
         jnode = $(@getDOMNode())
         offset = jnode.offset()
+        jnode_width = jnode.width()
+        jnode_height = jnode.height()
         minX = offset.left
-        maxX = offset.left + jnode.width()
+        maxX = offset.left + jnode_width
         @setState {selector: {
             initialPos: {x: offset.left, y: offset.top}
+            height: jnode_height
+            width: 160
             minX
             maxX
         }}

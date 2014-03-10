@@ -9,12 +9,12 @@ Selector = React.createClass
         div
             className: "col-md-4 selector",
             style:
-                height: 187
+                height: @props.height
+                width: @props.width
                 left: @state.pos.x + 'px'
                 top: @state.pos.y + 'px'
                 position: 'absolute'
             onMouseDown: @onMouseDown,
             onMouseUp: @onMouseUp,
-            onClick: @click
 
 module.exports = Selector
