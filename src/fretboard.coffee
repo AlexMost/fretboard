@@ -53,13 +53,18 @@ Guitar = React.createClass
         jnode_height = jnode.height()
         minX = offset.left
         maxX = offset.left + jnode_width
-        @setState {selector: {
-            initialPos: {x: offset.left, y: offset.top}
-            height: jnode_height
-            width: 160
-            minX
-            maxX}
-        }
+        @setState
+            selector:
+                initialPos:
+                    x: offset.left
+                    y: offset.top
+                height: jnode_height
+                width: 160
+                minX: minX
+                maxX: maxX
+            selectorX: offset.left
+
+        @onSelectorMove @state.selectorX
 
     playScale: ->
         self = @
@@ -71,12 +76,17 @@ Guitar = React.createClass
                         self.stopPlayFret [sNum, fNum]
                         cb?()
                     self.state.timeout)
-        async.mapSeries @state.tabs, iterator, ->
+
+        tabs_to_play = @state.tabs.filter ([sNum, fNum]) ->
+            self.state.frets[sNum][fNum].data().selected
+
+        async.mapSeries tabs_to_play, iterator, ->
 
     pressStringFrets: (tabs) ->
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
         frets[sNum][fNum].check() for [sNum, fNum] in tabs
         @setState {frets, tabs}
+        @onSelectorMove @state.selectorX
 
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
@@ -88,6 +98,7 @@ Guitar = React.createClass
         {stringsNum, fretsNum, notesMap, frets, timeout, selector}
 
     onSelectorMove: (x) ->
+        @setState {selectorX: x}
         frets = @state.frets
         for sNum, string of frets
             for fNum, fret of string
@@ -133,11 +144,13 @@ Fret = React.createClass
     play: ->
         play_fret @props.data.stringNum, @props.data.num
     render: ->
+        text = ''
+
         className = if @props.data.checked then "on" else "off"
-        text = if @props.data.checked then @props.data.note else ''
+
+        if @props.data.checked
+            text = @props.data.note
         playClass = if @props.data.playing then "playing" else ''
-        if @props.data.selected
-            text = 's'
 
         attrs =
             className: "col-md-1 fret #{className} #{playClass}"
