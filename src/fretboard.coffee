@@ -64,8 +64,6 @@ Guitar = React.createClass
                 maxX: maxX
             selectorX: offset.left
 
-        @onSelectorMove @state.selectorX
-
     playScale: ->
         self = @
         iterator = ([sNum, fNum], cb) ->
@@ -85,8 +83,8 @@ Guitar = React.createClass
     pressStringFrets: (tabs) ->
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
         frets[sNum][fNum].check() for [sNum, fNum] in tabs
-        @setState {frets, tabs}
-        @onSelectorMove @state.selectorX
+        @setState {frets, tabs}, ->
+            @onSelectorMove @state.selectorX
 
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
