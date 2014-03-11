@@ -78,16 +78,34 @@ Guitar = React.createClass
                         cb?()
                     self.state.timeout)
 
-        tabs_to_play = @state.tabs.filter ([sNum, fNum]) ->
-            self.state.frets[sNum][fNum].data().selected
+        tabs_to_play = @get_checked_frets_tabs().filter ([sN, fN]) ->
+            self.state.frets[sN][fN].data().selected
 
         async.mapSeries tabs_to_play, iterator, ->
 
-    pressStringFrets: (tabs) ->
+    pressTabs: (tabs) ->
         self = @
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
         frets[sNum][fNum].check() for [sNum, fNum] in tabs
-        @setState {frets, tabs}, ->
+        @setState {frets}, ->
+            self.onSelectorMove self.state.selectorX
+
+    get_checked_frets_tabs: ->
+        ret_tabs = []
+        for sNum, string of @state.frets
+            for fNum, fret of string
+                if fret.data().checked
+                    ret_tabs.push [sNum, fNum]
+        ret_tabs
+
+    pressNotes: (notes) ->
+        self = @
+        frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
+        for sN, string of frets
+            for fN, fret of string
+                if fret.data().note in notes
+                    fret.check()
+        @setState {frets}, ->
             self.onSelectorMove self.state.selectorX
 
     getInitialState: ->

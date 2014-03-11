@@ -2,24 +2,25 @@
 {Dropdown} = require 'toolbox'
 React = require 'react'
 {div, button} = React.DOM
-scalesData = require 'scales'
+{SCALES} = require 'scales'
+{NOTES} = require 'notes'
 
-notesOptions = ([k, k] for k, v of scalesData)
-scalesOptions = [["Minor", "Minor"], ["Major", "Major"]]
+notesOptions = ([note, note] for note in NOTES)
+scalesOptions = ([scale, scale] for scale of SCALES)
 
 Note = "C"
-Scale = "Minor"
+Scale = "Major"
 
 guitarInstance = Guitar {fretWidth: 40, fretHeight: 30}
 React.renderComponent guitarInstance, document.getElementById "container"
 
 handleChangeNote = ({value}) ->
     Note = value
-    guitarInstance.pressStringFrets scalesData[Note][Scale]
+    guitarInstance.pressNotes SCALES[Scale].get_notes Note
 
 handleChangeScale = ({value}) ->
     Scale = value
-    guitarInstance.pressStringFrets scalesData[Note][Scale]
+    guitarInstance.pressNotes SCALES[Scale].get_notes Note
 
 React.renderComponent(
     (div {},
@@ -30,4 +31,4 @@ React.renderComponent(
     document.getElementById "toolbar"
 )
 
-guitarInstance.pressStringFrets scalesData[Note][Scale]
+guitarInstance.pressNotes SCALES[Scale].get_notes Note

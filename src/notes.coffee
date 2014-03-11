@@ -38,4 +38,6 @@ module.exports = {
     STANDART_TUNING
     NOTES
     generateNotes
+    get_note_index
+    get_new_index
 }
