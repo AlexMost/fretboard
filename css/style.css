@@ -12,12 +12,17 @@
     margin: auto;
 }
 
+
 .on {
     background: red;
 }
 
 .off {
     background: none;
+}
+
+.on-selected {
+    background: cornflowerblue;
 }
 
 .playing {

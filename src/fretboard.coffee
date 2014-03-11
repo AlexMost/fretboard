@@ -47,6 +47,7 @@ Guitar = React.createClass
         @setState {frets}
 
     componentDidMount: ->
+        self = @
         jnode = $(@getDOMNode())
         offset = jnode.offset()
         jnode_width = jnode.width()
@@ -63,6 +64,8 @@ Guitar = React.createClass
                 minX: minX
                 maxX: maxX
             selectorX: offset.left
+            ->
+                self.onSelectorMove offset.left
 
     playScale: ->
         self = @
@@ -81,10 +84,11 @@ Guitar = React.createClass
         async.mapSeries tabs_to_play, iterator, ->
 
     pressStringFrets: (tabs) ->
+        self = @
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
         frets[sNum][fNum].check() for [sNum, fNum] in tabs
         @setState {frets, tabs}, ->
-            @onSelectorMove @state.selectorX
+            self.onSelectorMove self.state.selectorX
 
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
@@ -139,12 +143,12 @@ GString = React.createClass
 
 Fret = React.createClass
     displayName: "Fret"
-    play: ->
-        play_fret @props.data.stringNum, @props.data.num
     render: ->
         text = ''
 
         className = if @props.data.checked then "on" else "off"
+        if @props.data.checked and @props.data.selected
+            className = "on-selected"
 
         if @props.data.checked
             text = @props.data.note
