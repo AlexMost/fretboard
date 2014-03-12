@@ -9,7 +9,7 @@ notesOptions = ([note, note] for note in NOTES)
 scalesOptions = ([scale, scale] for scale of SCALES)
 
 Note = "C"
-Scale = "Major"
+Scale = "Minor"
 
 guitarInstance = Guitar {fretWidth: 40, fretHeight: 30}
 React.renderComponent guitarInstance, document.getElementById "container"
@@ -24,8 +24,16 @@ handleChangeScale = ({value}) ->
 
 React.renderComponent(
     (div {},
-        (Dropdown {data: {options: notesOptions}, onChange: handleChangeNote})
-        (Dropdown {data: {options: scalesOptions}, onChange: handleChangeScale})
+        (Dropdown {
+            data: {options: notesOptions},
+            onChange: handleChangeNote,
+            selected: Note
+        })
+        (Dropdown {
+            data: {options: scalesOptions},
+            onChange: handleChangeScale,
+            selected: Scale
+        })
         (button {value: "play", onClick: guitarInstance.playScale}, "play")
     )
     document.getElementById "toolbar"

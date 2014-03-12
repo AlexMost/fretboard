@@ -7,15 +7,13 @@ Option = React.createClass
         text = @props.data?.text or "Undefined"
         value = @props.data?.value or "Undefined"
         {text, value}
-
     render: ->
         option {value: @state.value}, @state.text
 
 
 Dropdown = React.createClass
     displayName: "Dropdown"
-    getDefaultProps: ->
-        onChange: ->
+    getDefaultProps: -> onChange: ->
     changeHandler: (event) -> @props.onChange {value: @getValue()}
     getValue: -> @refs.select.getDOMNode().value
     getInitialState: ->
@@ -26,7 +24,10 @@ Dropdown = React.createClass
                 Option {data: {value, text}}
             {options}
     render: ->
-        select {ref:"select", onChange: @changeHandler}, @state.options
+        select {
+                ref:"select",
+                onChange: @changeHandler
+                }, @state.options
 
 
 module.exports = {Dropdown}
