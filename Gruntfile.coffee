@@ -17,8 +17,18 @@ module.exports = (grunt) ->
                 paths: ['lib-js/', 'lib/']
                 dest: 'public/app.js'
 
+        uglify:
+            options:
+                mangle:
+                    except: ["jQuery", "require"]
+            build:
+                files:
+                    'public/app-min.js': ['public/app.js']
+
+
     grunt.loadNpmTasks "grunt-contrib-watch"
     grunt.loadNpmTasks "grunt-contrib-coffee"
+    grunt.loadNpmTasks "grunt-contrib-uglify"
     grunt.loadNpmTasks "grunt-stitch"
 
     grunt.registerTask "build", ["coffee:src", "stitch"]
