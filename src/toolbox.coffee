@@ -1,5 +1,5 @@
 React = require 'react'
-{select, option} = React.DOM
+{select, option, button} = React.DOM
 
 
 Option = React.createClass
@@ -30,4 +30,26 @@ Dropdown = React.createClass
                 }, @state.options
 
 
-module.exports = {Dropdown}
+Thumbler = React.createClass
+    displayName: "Thumbler"
+    getDefaultProps: ->
+        state1: "On"
+        state2: "Off"
+        onChange: ->
+    getInitialState: ->
+        {value: @props.value or @props.state1}
+
+    handleClick: ->
+        {state1, state2} = @props
+        value = if @state.value is state1
+            state2
+        else
+            state1
+        @setState {value}, ->
+            @props.onChange value
+
+    render: ->
+        button {onClick: @handleClick}, @state.value
+
+
+module.exports = {Dropdown, Thumbler}

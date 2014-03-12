@@ -1,5 +1,5 @@
 {Guitar} = require 'fretboard'
-{Dropdown} = require 'toolbox'
+{Dropdown, Thumbler} = require 'toolbox'
 React = require 'react'
 {div, button} = React.DOM
 {SCALES} = require 'scales'
@@ -22,6 +22,9 @@ handleChangeScale = ({value}) ->
     Scale = value
     guitarInstance.pressNotes SCALES[Scale].get_notes Note
 
+onDirectionChange = (direction) ->
+    guitarInstance.setState {play_reverse: direction is "asc"}
+
 React.renderComponent(
     (div {},
         (Dropdown {
@@ -35,6 +38,11 @@ React.renderComponent(
             selected: Scale
         })
         (button {value: "play", onClick: guitarInstance.playScale}, "play")
+        (Thumbler {
+            state1: "asc",
+            state2: "desc",
+            onChange: onDirectionChange
+        })
     )
     document.getElementById "toolbar"
 )

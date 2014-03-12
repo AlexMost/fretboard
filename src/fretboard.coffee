@@ -92,8 +92,15 @@ Guitar = React.createClass
 
     get_checked_frets_tabs: ->
         ret_tabs = []
-        for sNum, string of @state.frets
-            for fNum, fret of string
+
+        strings = ([string, sN] for sN, string of @state.frets)
+        strings = strings.reverse() if @state.play_reverse
+
+        for [string, sNum] in strings
+            frets = ([fret, fN] for fN, fret of string)
+            frets = frets.reverse() unless @state.play_reverse
+
+            for [fret, fNum] in frets
                 if fret.data().checked
                     ret_tabs.push [sNum, fNum]
         ret_tabs
@@ -115,7 +122,9 @@ Guitar = React.createClass
         frets = getClearFrets stringsNum, fretsNum, notesMap
         timeout = 200
         selector = null
-        {stringsNum, fretsNum, notesMap, frets, timeout, selector}
+        play_reverse = true
+        {stringsNum, fretsNum, notesMap, frets, timeout, selector,
+         play_reverse}
 
     onSelectorMove: (x) ->
         @setState {selectorX: x}
