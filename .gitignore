@@ -1,5 +1,7 @@
 lib-js/**
 node_modules/**
-public/*.js
+public/**
+dist/**
 .idea/**
+.grunt/**
 .DS_Store
