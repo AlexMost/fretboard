@@ -1,0 +1,38 @@
+.string {
+    border-bottom: 1px solid gray;
+}
+
+.fret {
+    border-right: 1px solid black;
+}
+
+.guitar {
+    z-index: 1;
+    width: 900px;
+    margin: auto;
+}
+
+
+.on {
+    background: red;
+}
+
+.off {
+    background: none;
+}
+
+.on-selected {
+    background: cornflowerblue;
+}
+
+.playing {
+    background: green;
+}
+
+.selector {
+    z-index: 10;
+    cursor: move;
+    border: 5px solid greenyellow;
+    padding: 0px;
+    margin-left: -15px;
+}
