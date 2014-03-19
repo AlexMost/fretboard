@@ -13,8 +13,9 @@ play_fret = (sNum, fNum, cb) ->
 
 
 get_sound = (sNum, fNum, onload) ->
-    audio_file = "./resources/#{sNum}string/#{fNum}.wav"
-    new Howl {urls: [audio_file], onload}
+    audio_file_wav = "./resources/#{sNum}string/wav/#{fNum}.wav"
+    audio_file_mp3 = "./resources/#{sNum}string/mp3/#{fNum}.mp3"
+    new Howl {urls: [audio_file_mp3, audio_file_wav], onload}
 
 
 module.exports = {get_sound, play_fret}
