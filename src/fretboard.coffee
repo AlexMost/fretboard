@@ -2,7 +2,7 @@ React = require 'react'
 async = require 'async'
 
 {STANDART_TUNING, generateNotes} = require 'notes'
-{div, li, ul} = React.DOM
+{div, li, ul, span} = React.DOM
 {play_fret} = require 'notes_sound'
 Selector = require 'selector'
 $ = require 'jquery'
@@ -165,7 +165,7 @@ GString = React.createClass
                 height: self.props.Fheight
 
         frets = [make_fret(fret)for fNum, fret of @props.data.frets]
-        div {className: "row string"}, frets
+        div {className: "row"}, frets
 
 
 Fret = React.createClass
@@ -173,20 +173,22 @@ Fret = React.createClass
     render: ->
         text = ''
 
-        className = if @props.data.checked then "on" else "off"
+        className = if @props.data.checked then "on shadow" else "off"
         if @props.data.checked and @props.data.selected
-            className = "on-selected"
+            className = "on-selected shadow"
 
         if @props.data.checked
             text = @props.data.note
         playClass = if @props.data.playing then "playing" else ''
 
         attrs =
-            className: "col-md-1 fret #{className} #{playClass}"
+            className: "col-md-1 fret padding0"
             style:
                 width: @props.width
                 height: @props.height
 
-        div attrs, text
+        (div attrs,
+            (span {className: "string"}, ""),
+            (span {className: "circleBase #{className} #{playClass}"}, text))
 
 module.exports = {Guitar, GString, Fret}

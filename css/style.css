@@ -1,9 +1,23 @@
-.string {
-    border-bottom: 1px solid gray;
+.fret {
+    background: #845924;
+    position: relative;
+    border-right: 1px solid black;
 }
 
-.fret {
-    border-right: 1px solid black;
+.string {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    border-bottom: 2px solid #afafaf;
+    z-index: 1;
+}
+
+.shadow {
+    -moz-box-shadow: 3px 3px 4px #444;
+	-webkit-box-shadow: 3px 3px 4px #444;
+	box-shadow: 3px 3px 4px #444;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#444444')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#444444');
 }
 
 .guitar {
@@ -35,4 +49,23 @@
     border: 5px solid greenyellow;
     padding: 0px;
     margin-left: -15px;
+}
+
+.circleBase {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    padding: 0px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    z-index: 3;
+    position: absolute;
+}
+
+.padding0 {
+    padding: 0
 }
