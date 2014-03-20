@@ -64,10 +64,11 @@ Guitar = React.createClass
                 minX: minX
                 maxX: maxX
             selectorX: offset.left
-            ->
-                self.onSelectorMove offset.left
+            -> self.onSelectorMove offset.left
 
-    playScale: ->
+    playScale: (play_cb) ->
+        @setState {is_playing: true}
+
         self = @
         iterator = ([sNum, fNum], cb) ->
             self.startPlayFret [sNum, fNum]
@@ -75,13 +76,18 @@ Guitar = React.createClass
                 setTimeout(
                     ->
                         self.stopPlayFret [sNum, fNum]
-                        cb?()
+                        if self.state.is_playing then cb?() else cb?("stop")
                     self.state.timeout)
 
         tabs_to_play = @get_checked_frets_tabs().filter ([sN, fN]) ->
             self.state.frets[sN][fN].data().selected
 
-        async.mapSeries tabs_to_play, iterator, ->
+        async.mapSeries tabs_to_play, iterator, (err) ->
+            play_cb?() unless err
+            @setState {is_playing: false}
+
+    stopPlayScale: -> @setState {is_playing: false}
+
 
     pressTabs: (tabs) ->
         self = @
@@ -123,8 +129,9 @@ Guitar = React.createClass
         timeout = 200
         selector = null
         play_reverse = true
+        is_playing = false
         {stringsNum, fretsNum, notesMap, frets, timeout, selector,
-         play_reverse}
+         play_reverse, is_playing}
 
     onSelectorMove: (x) ->
         @setState {selectorX: x}

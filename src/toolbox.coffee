@@ -39,7 +39,7 @@ Thumbler = React.createClass
     getInitialState: ->
         {value: @props.value or @props.state1}
 
-    handleClick: ->
+    toggle: ->
         {state1, state2} = @props
         value = if @state.value is state1
             state2
@@ -49,7 +49,7 @@ Thumbler = React.createClass
             @props.onChange value
 
     render: ->
-        button {onClick: @handleClick}, @state.value
+        button {onClick: @toggle}, @state.value
 
 
 module.exports = {Dropdown, Thumbler}
