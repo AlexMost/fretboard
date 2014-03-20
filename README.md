@@ -7,6 +7,14 @@ Currently is under develop ...
 
 Project is open for your ideas and proposals
 
+## Installation details
+To build and run this project locally you must have [node](http://nodejs.org/) and [grunt-cli](http://gruntjs.com/) installed.
+
+* clone repo and **cd** to it
+* **npm install .**
+* **grunt build**
+* open **index.html** in browser
+
 
 ## What is already done ?
 * Switching guitar scales (minor, major).
