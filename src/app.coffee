@@ -11,7 +11,11 @@ scalesOptions = ([scale, scale] for scale of SCALES)
 Note = "C"
 Scale = "Minor"
 
-guitarInstance = Guitar {fretWidth: 40, fretHeight: 30}
+guitarInstance = Guitar {
+    fretWidth: 40,
+    fretHeight: 30,
+    selectorFretsCount: 4}
+
 React.renderComponent guitarInstance, document.getElementById "container"
 
 handleChangeNote = ({value}) ->

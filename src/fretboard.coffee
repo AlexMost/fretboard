@@ -60,7 +60,7 @@ Guitar = React.createClass
                     x: offset.left
                     y: offset.top
                 height: jnode_height
-                width: 160
+                width: @state.selectorFretsCount * @props.fretWidth
                 minX: minX
                 maxX: maxX
             selectorX: offset.left
@@ -125,21 +125,23 @@ Guitar = React.createClass
         stringsNum = @props.data?.stringsNum or 6
         fretsNum = @props.data?.fretsNum or 16
         notesMap = generateNotes stringsNum, fretsNum, STANDART_TUNING
+        selectorFretsCount = @props.selectorFretsCount or 4
         frets = getClearFrets stringsNum, fretsNum, notesMap
         timeout = 200
         selector = null
         play_reverse = true
         is_playing = false
         {stringsNum, fretsNum, notesMap, frets, timeout, selector,
-         play_reverse, is_playing}
+         play_reverse, is_playing, selectorFretsCount}
 
     onSelectorMove: (x) ->
         @setState {selectorX: x}
         frets = @state.frets
+        selectorWidth = @state.selectorFretsCount * @props.fretWidth
         for sNum, string of frets
             for fNum, fret of string
                 fret_offset = @state.selector.initialPos.x + fNum * @props.fretWidth
-                if fret_offset >= x and fret_offset <= x + 160
+                if fret_offset >= x and fret_offset <= x + selectorWidth
                     fret.select()
                 else
                     fret.unselect()
@@ -158,7 +160,10 @@ Guitar = React.createClass
             selector_data["onXChange"] = @onSelectorMove
             Selector selector_data
 
-        div {className: "guitar"}, [selector, strings]
+        (div {style:
+                width: @state.fretsNum * @props.fretWidth
+             },
+            [selector, strings])
 
 
 GString = React.createClass
