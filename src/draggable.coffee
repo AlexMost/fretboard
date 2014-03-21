@@ -25,10 +25,13 @@ Draggable = ({useX, useY, minX, maxX}) ->
         rel = {}
         newX = e.pageX
         {minX, maxX} = @props
-        if useX and newX >= minX and newX <= maxX
-            rel.x = e.pageX - pos.left
+
+        rel.x = if useX and newX >= minX and newX <= maxX
+            e.pageX - pos.left
         else if newX <= minX
-            rel.x = minX
+            minX
+        else if newX >= maxX
+            maxX
 
         @setState {dragging: true, rel}
         e.stopPropagation()
@@ -45,12 +48,15 @@ Draggable = ({useX, useY, minX, maxX}) ->
         pos = {}
         newX = e.pageX - @state.rel.x
         {minX, maxX} = @props
-        if useX and newX >= minX and newX <= maxX
-            pos.x = newX
-            @props.onXChange?(pos.x)
+
+        pos.x = if useX and newX >= minX and newX <= maxX
+            newX
         else if newX <= minX
-            pos.x = minX
-            @props.onXChange?(pos.x)
+            minX
+        else if newX >= maxX
+            maxX
+
+        @props.onXChange?(pos.x)
 
         @setState {pos}
         e.stopPropagation()

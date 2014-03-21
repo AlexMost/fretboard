@@ -52,15 +52,16 @@ Guitar = React.createClass
         offset = jnode.offset()
         jnode_width = jnode.width()
         jnode_height = jnode.height()
+        selctorWidth = @state.selectorFretsCount * @props.fretWidth
         minX = offset.left
-        maxX = offset.left + jnode_width
+        maxX = offset.left + jnode_width - selctorWidth
         @setState
             selector:
                 initialPos:
                     x: offset.left
                     y: offset.top
                 height: jnode_height
-                width: @state.selectorFretsCount * @props.fretWidth
+                width: selctorWidth
                 minX: minX
                 maxX: maxX
             selectorX: offset.left
