@@ -8,6 +8,8 @@ load_fret = (sNum, fNum, cb) ->
         sound = get_sound sNum, fNum, ->
             sounds_cache[sNum][fNum] = sound
             cb?()
+    else
+        cb?()
 
 
 play_fret = (sNum, fNum, cb) ->
