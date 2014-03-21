@@ -82,7 +82,7 @@ Guitar = React.createClass
         tabs_to_play = @get_checked_frets_tabs().filter ([sN, fN]) ->
             self.state.frets[sN][fN].data().selected
 
-        async.mapSeries tabs_to_play, iterator, (err) ->
+        async.mapSeries tabs_to_play, iterator, (err) =>
             play_cb?() unless err
             @setState {is_playing: false}
 

@@ -36,6 +36,7 @@ Thumbler = React.createClass
         state1: "On"
         state2: "Off"
         onChange: ->
+
     getInitialState: ->
         {value: @props.value or @props.state1}
 
@@ -45,7 +46,7 @@ Thumbler = React.createClass
             state2
         else
             state1
-        @setState {value}, ->
+        @setState {value}, =>
             @props.onChange value
 
     render: ->
