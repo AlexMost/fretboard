@@ -3,6 +3,13 @@
 sounds_cache = {1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}}
 
 
+load_fret = (sNum, fNum, cb) ->
+    unless sounds_cache[sNum][fNum]
+        sound = get_sound sNum, fNum, ->
+            sounds_cache[sNum][fNum] = sound
+            cb?()
+
+
 play_fret = (sNum, fNum, cb) ->
     cacheSound = sounds_cache[sNum][fNum]
     if cacheSound
@@ -18,4 +25,4 @@ get_sound = (sNum, fNum, onload) ->
     new Howl {urls: [audio_file_mp3, audio_file_wav], onload}
 
 
-module.exports = {get_sound, play_fret}
+module.exports = {get_sound, play_fret, load_fret}

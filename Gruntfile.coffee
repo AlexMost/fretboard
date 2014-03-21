@@ -19,6 +19,7 @@ module.exports = (grunt) ->
 
         uglify:
             options:
+                banner: '<%= grunt.template.today("yyyy-mm-dd") %> */'
                 mangle:
                     except: ["jQuery", "require"]
             build:

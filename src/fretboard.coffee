@@ -3,7 +3,7 @@ async = require 'async'
 
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul, span} = React.DOM
-{play_fret} = require 'notes_sound'
+{play_fret, load_fret} = require 'notes_sound'
 Selector = require 'selector'
 $ = require 'jquery'
 
@@ -83,9 +83,12 @@ Guitar = React.createClass
         tabs_to_play = @get_checked_frets_tabs().filter ([sN, fN]) ->
             self.state.frets[sN][fN].data().selected
 
-        async.mapSeries tabs_to_play, iterator, (err) =>
-            play_cb?() unless err
-            @setState {is_playing: false}
+        load_iterator = ([sNum, fNum], cb) -> load_fret sNum, fNum, cb
+
+        async.map tabs_to_play, load_iterator, ->
+            async.mapSeries tabs_to_play, iterator, (err) ->
+                play_cb?() unless err
+                self.setState {is_playing: false}
 
     stopPlayScale: -> @setState {is_playing: false}
 
