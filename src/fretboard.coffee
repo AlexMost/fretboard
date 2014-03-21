@@ -141,7 +141,7 @@ Guitar = React.createClass
         for sNum, string of frets
             for fNum, fret of string
                 fret_offset = @state.selector.initialPos.x + fNum * @props.fretWidth
-                if fret_offset >= x and fret_offset <= x + selectorWidth
+                if fret_offset > x and fret_offset < x + selectorWidth + @props.fretWidth
                     fret.select()
                 else
                     fret.unselect()
