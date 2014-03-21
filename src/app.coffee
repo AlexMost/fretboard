@@ -12,7 +12,7 @@ Note = "C"
 Scale = "Minor"
 
 guitarInstance = Guitar {
-    fretWidth: 40,
+    fretWidth: 50,
     fretHeight: 30,
     selectorFretsCount: 4}
 

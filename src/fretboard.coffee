@@ -89,7 +89,6 @@ Guitar = React.createClass
 
     stopPlayScale: -> @setState {is_playing: false}
 
-
     pressTabs: (tabs) ->
         self = @
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap

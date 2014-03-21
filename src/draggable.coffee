@@ -29,9 +29,9 @@ Draggable = ({useX, useY, minX, maxX}) ->
         rel.x = if useX and newX >= minX and newX <= maxX
             e.pageX - pos.left
         else if newX <= minX
-            minX
-        else if newX >= maxX
             maxX
+        else if newX >= maxX
+            minX
 
         @setState {dragging: true, rel}
         e.stopPropagation()
