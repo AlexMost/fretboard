@@ -29,16 +29,6 @@ handleChangeScale = ({value}) ->
 onDirectionChange = (direction) ->
     guitarInstance.setState {play_reverse: direction is "asc"}
 
-playButton = (Thumbler {
-    state1: "play",
-    state2: "stop",
-    onChange: (state) ->
-        unless state is "play"
-            guitarInstance.playScale ->
-                playButton.toggle()
-        else
-            guitarInstance.stopPlayScale()
-})
 
 React.renderComponent(
     (div {},
@@ -52,7 +42,6 @@ React.renderComponent(
             onChange: handleChangeScale,
             selected: Scale
         })
-        playButton
         (Thumbler {
             state1: "asc",
             state2: "desc",

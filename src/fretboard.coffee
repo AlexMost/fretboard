@@ -1,8 +1,9 @@
 React = require 'react'
 async = require 'async'
 {STANDART_TUNING, generateNotes} = require 'notes'
-{div, li, ul, span} = React.DOM
+{div, li, ul, span, button} = React.DOM
 {play_fret, load_fret} = require 'notes_sound'
+{Thumbler} = require 'toolbox'
 Selector = require 'selector'
 $ = require 'jquery'
 {emitter} = require 'ev_channel'
@@ -56,8 +57,8 @@ Guitar = React.createClass
         jnode = $(@getDOMNode())
         offset = jnode.offset()
         jnode_width = jnode.width()
-        jnode_height = jnode.height()
         selctorWidth = @state.selectorFretsCount * @props.fretWidth
+        selectorHeight = @state.stringsNum * @props.fretHeight
         minX = offset.left
         maxX = offset.left + jnode_width - selctorWidth
         @setState
@@ -65,7 +66,7 @@ Guitar = React.createClass
                 initialPos:
                     x: offset.left
                     y: offset.top
-                height: jnode_height
+                height: selectorHeight
                 width: selctorWidth
                 minX: minX
                 maxX: maxX
@@ -145,7 +146,7 @@ Guitar = React.createClass
          play_reverse, is_playing, selectorFretsCount}
 
     onSelectorMove: (x) ->
-        @setState {selectorX: x}
+        @setState {selectorX: x, is_playing: false}
         frets = @state.frets
         selectorWidth = @state.selectorFretsCount * @props.fretWidth
         for sNum, string of frets
@@ -166,14 +167,20 @@ Guitar = React.createClass
                 Fheight: @props.fretHeight
 
         selector = if @state.selector
-            selector_data = @state.selector
-            selector_data["onXChange"] = @onSelectorMove
-            Selector selector_data
+            @state.selector["onXChange"] = @onSelectorMove
+            Selector @state.selector
 
-        (div {style:
+        (div
+            style:
                 width: @state.fretsNum * @props.fretWidth
-             },
-            [selector, strings])
+            (div {}, selector, strings)
+            (div {},
+                (button
+                    onClick: if @state.is_playing then @stopPlayScale else @playScale
+                    (if @state.is_playing then "stop" else "play")
+                )
+            )
+        )
 
 
 GString = React.createClass
