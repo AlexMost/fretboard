@@ -1,11 +1,16 @@
 React = require 'react'
 async = require 'async'
-
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul, span} = React.DOM
 {play_fret, load_fret} = require 'notes_sound'
 Selector = require 'selector'
 $ = require 'jquery'
+{emitter} = require 'ev_channel'
+
+{
+EVENT_SOUNDS_LOADING_START
+EVENT_SOUNDS_LOADING_STOP
+} = require 'defs'
 
 
 blFret = (sNum, fNum, note, checked, playing, selected) ->
@@ -71,7 +76,7 @@ Guitar = React.createClass
         @setState {is_playing: true}
 
         self = @
-        iterator = ([sNum, fNum], cb) ->
+        play_iterator = ([sNum, fNum], cb) ->
             self.startPlayFret [sNum, fNum]
             play_fret sNum, fNum, ->
                 setTimeout(
@@ -85,8 +90,10 @@ Guitar = React.createClass
 
         load_iterator = ([sNum, fNum], cb) -> load_fret sNum, fNum, cb
 
+        emitter.pub EVENT_SOUNDS_LOADING_START
         async.map tabs_to_play, load_iterator, ->
-            async.mapSeries tabs_to_play, iterator, (err) ->
+            emitter.pub EVENT_SOUNDS_LOADING_STOP
+            async.mapSeries tabs_to_play, play_iterator, (err) ->
                 play_cb?() unless err
                 self.setState {is_playing: false}
 

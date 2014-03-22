@@ -2,14 +2,6 @@ React = require 'react'
 $ = require 'jquery'
 
 Draggable = ({useX, useY, minX, maxX}) ->
-    getDefaultProps: ->
-        initialPos: {x: 270, y: 141}
-
-    getInitialState: ->
-        pos: @props.initialPos
-        dragging: false
-        rel: null
-
     componentDidUpdate: (props, state) ->
         if @state.dragging and not state.dragging
             document.addEventListener 'mousemove', @onMouseMove
