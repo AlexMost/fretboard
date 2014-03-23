@@ -27,7 +27,8 @@
 
 
 .on {
-    background: red;
+    background: black;
+    color: white;
 }
 
 .off {
@@ -36,6 +37,11 @@
 
 .on-selected {
     background: cornflowerblue;
+}
+
+.on-selected-root {
+    color: white;
+    background: red;
 }
 
 .playing {
