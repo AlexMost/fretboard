@@ -14,18 +14,20 @@ EVENT_SOUNDS_LOADING_STOP
 } = require 'defs'
 
 
-blFret = (sNum, fNum, note, checked, playing, selected) ->
+blFret = (sNum, fNum, note, checked, playing, selected, root_note) ->
     checked or= false
     playing or= false
     selected or=false
+    root_note or=false
 
-    data: -> {sNum, fNum, note, checked, playing, selected}
+    data: -> {sNum, fNum, note, checked, playing, selected, root_note}
     playStart: -> playing = true
     playStop: -> playing = false
     check: -> checked = true
     uncheck: -> checked = false
     select: -> selected = true
     unselect: -> selected = false
+    set_root: -> root_note = true
 
 
 blString = (sNum, frets) ->
@@ -122,11 +124,13 @@ Guitar = React.createClass
                     ret_tabs.push [sNum, fNum]
         ret_tabs
 
-    pressNotes: (notes) ->
+    pressNotes: (notes, rootNote) ->
         self = @
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
         for sN, string of frets
             for fN, fret of string
+                if fret.data().note is rootNote
+                    fret.set_root()
                 if fret.data().note in notes
                     fret.check()
         @setState {frets}, ->
@@ -206,8 +210,12 @@ Fret = React.createClass
         if @props.data.checked and @props.data.selected
             className = "on-selected shadow"
 
+        if @props.data.root_note
+            className = "on-selected-root shadow"
+
         if @props.data.checked
             text = @props.data.note
+
         playClass = if @props.data.playing then "playing" else ''
 
         attrs =

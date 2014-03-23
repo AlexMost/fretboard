@@ -20,11 +20,11 @@ React.renderComponent guitarInstance, document.getElementById "container"
 
 handleChangeNote = ({value}) ->
     Note = value
-    guitarInstance.pressNotes SCALES[Scale].get_notes Note
+    guitarInstance.pressNotes (SCALES[Scale].get_notes Note), Note
 
 handleChangeScale = ({value}) ->
     Scale = value
-    guitarInstance.pressNotes SCALES[Scale].get_notes Note
+    guitarInstance.pressNotes (SCALES[Scale].get_notes Note), Note
 
 onDirectionChange = (direction) ->
     guitarInstance.setState {play_reverse: direction is "asc"}
@@ -51,4 +51,4 @@ React.renderComponent(
     document.getElementById "toolbar"
 )
 
-guitarInstance.pressNotes SCALES[Scale].get_notes Note
+guitarInstance.pressNotes (SCALES[Scale].get_notes Note), Note
