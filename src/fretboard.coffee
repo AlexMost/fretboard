@@ -154,7 +154,7 @@ Guitar = React.createClass
         notesMap = generateNotes stringsNum, fretsNum, STANDART_TUNING
         selectorFretsCount = @props.selectorFretsCount or 4
         frets = getClearFrets stringsNum, fretsNum, notesMap
-        timeout = 200
+        timeout = 400
         selector = null
         play_reverse = true
         is_playing = false
@@ -199,6 +199,18 @@ Guitar = React.createClass
                 (DirectionDropdown
                     current_dir: @state.direction
                     onChange: (direction) => @setState {direction})
+                (div {},
+                    (input
+                        type: "range"
+                        min: 0
+                        max: 1000
+                        step: 200
+                        style: {width: "200px"}
+                        onChange: (ev) => @setState {timeout: ev.target.value}
+                        value: @state.timeout
+                        "duration"
+                    ))
+                    (span {}, @state.timeout)
                 (div {},
                     (input
                         type: "checkbox"
