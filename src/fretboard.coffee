@@ -1,7 +1,7 @@
 React = require 'react'
 async = require 'async'
 {STANDART_TUNING, generateNotes} = require 'notes'
-{div, li, ul, span, button} = React.DOM
+{div, li, ul, span, button, input} = React.DOM
 {play_fret, load_fret} = require 'notes_sound'
 {Thumbler, Dropdown, DirectionDropdown} = require 'toolbox'
 Selector = require 'selector'
@@ -76,7 +76,7 @@ Guitar = React.createClass
             selectorX: offset.left
             -> self.onSelectorMove offset.left
 
-    playScale: (play_cb) ->
+    playScale: ->
         @setState {is_playing: true}
 
         self = @
@@ -98,10 +98,21 @@ Guitar = React.createClass
         async.map tabs_to_play, load_iterator, ->
             emitter.pub EVENT_SOUNDS_LOADING_STOP
             async.mapSeries tabs_to_play, play_iterator, (err) ->
-                play_cb?() unless err
-                self.setState {is_playing: false}
+                return unless self.state.is_playing
+                self.toggleDirection() if self.state.changeDirection
+
+                if self.state.repeat
+                    self.playScale()
+                else
+                    self.setState {is_playing: false}
 
     stopPlayScale: -> @setState {is_playing: false}
+
+    toggleDirection: ->
+        if @state.direction is "UP"
+            @setState {direction: "DOWN"}
+        else
+            @setState {direction: "UP"}
 
     pressTabs: (tabs) ->
         self = @
@@ -148,8 +159,11 @@ Guitar = React.createClass
         play_reverse = true
         is_playing = false
         direction = "DOWN"
+        repeat = false
+        changeDirection = false
         {stringsNum, fretsNum, notesMap, frets, timeout, selector,
-         play_reverse, is_playing, selectorFretsCount, direction}
+         play_reverse, is_playing, selectorFretsCount, direction, repeat,
+         changeDirection}
 
     onSelectorMove: (x) ->
         @setState {selectorX: x, is_playing: false}
@@ -185,6 +199,16 @@ Guitar = React.createClass
                 (DirectionDropdown
                     current_dir: @state.direction
                     onChange: (direction) => @setState {direction})
+                (div {},
+                    (input
+                        type: "checkbox"
+                        onChange: (ev) => @setState {repeat: ev.target.checked}
+                        "repeat"))
+                (div {},
+                    (input
+                        type: "checkbox"
+                        onChange: (ev) => @setState {changeDirection: ev.target.checked}
+                        "change direction"))
             )
         )
 
