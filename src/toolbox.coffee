@@ -53,4 +53,32 @@ Thumbler = React.createClass
         button {onClick: @toggle}, @state.value
 
 
-module.exports = {Dropdown, Thumbler}
+SimpleDropdown = React.createClass
+    displayName: "SimpleDropdown"
+    getDefaultProps: -> onChange: ->
+    changeHandler: ->
+        @props.onChange @refs.select.getDOMNode().value
+    render: ->
+        options = @props.options.map ([value, text]) ->
+            (option {value}, text)
+
+        (select
+            ref: "select"
+            value: @props.value
+            onChange: @changeHandler
+            options)
+
+
+DirectionDropdown = ({current_dir, onChange}) ->
+    options = [
+        ["DOWN", "DOWN"]
+        ["UP", "UP"]
+    ]
+
+    SimpleDropdown
+        options: options
+        onChange: onChange
+        value: current_dir
+
+
+module.exports = {Dropdown, Thumbler, DirectionDropdown}

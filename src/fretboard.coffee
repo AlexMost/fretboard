@@ -3,7 +3,7 @@ async = require 'async'
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul, span, button} = React.DOM
 {play_fret, load_fret} = require 'notes_sound'
-{Thumbler} = require 'toolbox'
+{Thumbler, Dropdown, DirectionDropdown} = require 'toolbox'
 Selector = require 'selector'
 $ = require 'jquery'
 {emitter} = require 'ev_channel'
@@ -72,6 +72,7 @@ Guitar = React.createClass
                 width: selctorWidth
                 minX: minX
                 maxX: maxX
+                onXChange: self.onSelectorMove
             selectorX: offset.left
             -> self.onSelectorMove offset.left
 
@@ -113,11 +114,11 @@ Guitar = React.createClass
         ret_tabs = []
 
         strings = ([string, sN] for sN, string of @state.frets)
-        strings = strings.reverse() if @state.play_reverse
+        strings = strings.reverse() if @state.direction is "DOWN"
 
         for [string, sNum] in strings
             frets = ([fret, fN] for fN, fret of string)
-            frets = frets.reverse() unless @state.play_reverse
+            frets = frets.reverse() if @state.direction is "UP"
 
             for [fret, fNum] in frets
                 if fret.data().checked
@@ -146,8 +147,9 @@ Guitar = React.createClass
         selector = null
         play_reverse = true
         is_playing = false
+        direction = "DOWN"
         {stringsNum, fretsNum, notesMap, frets, timeout, selector,
-         play_reverse, is_playing, selectorFretsCount}
+         play_reverse, is_playing, selectorFretsCount, direction}
 
     onSelectorMove: (x) ->
         @setState {selectorX: x, is_playing: false}
@@ -163,26 +165,26 @@ Guitar = React.createClass
         @setState {frets}
 
     render: ->
-        strings = [0..@state.stringsNum].map (num) =>
+        StringsList = [0..@state.stringsNum].map (num) =>
             GString
                 data:
                     frets: @state.frets[num]
                 Fwidth: @props.fretWidth
                 Fheight: @props.fretHeight
 
-        selector = if @state.selector
-            @state.selector["onXChange"] = @onSelectorMove
-            Selector @state.selector
+        SelectorComp = (Selector @state.selector) if @state.selector
 
         (div
             style:
                 width: @state.fretsNum * @props.fretWidth
-            (div {}, selector, strings)
+            (div {}, SelectorComp, StringsList)
             (div {},
                 (button
                     onClick: if @state.is_playing then @stopPlayScale else @playScale
-                    (if @state.is_playing then "stop" else "play")
-                )
+                    (if @state.is_playing then "stop" else "play"))
+                (DirectionDropdown
+                    current_dir: @state.direction
+                    onChange: (direction) => @setState {direction})
             )
         )
 

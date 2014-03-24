@@ -42,11 +42,6 @@ React.renderComponent(
             onChange: handleChangeScale,
             selected: Scale
         })
-        (Thumbler {
-            state1: "asc",
-            state2: "desc",
-            onChange: onDirectionChange
-        })
     )
     document.getElementById "toolbar"
 )
