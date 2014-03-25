@@ -1,9 +1,10 @@
 {Guitar} = require 'fretboard'
 {Dropdown} = require 'toolbox'
 React = require 'react'
-{div, button, span, h2} = React.DOM
+{div, button, span, h2, p} = React.DOM
 {SCALES} = require 'scales'
 {NOTES} = require 'notes'
+{print_size} = require 'scales_page_utils'
 
 notesOptions = ([note, note] for note in NOTES)
 scalesOptions = ([scale, scale] for scale of SCALES)
@@ -15,9 +16,12 @@ ScalesPage = React.createClass
         Scale: "Minor"
 
     render: ->
+
         (div {},
             (div {},
-                (h2 {}, "#{@state.Note} #{@state.Scale}"))
+                (h2 {}, "#{@state.Note} #{@state.Scale}")
+                (p {}, print_size(SCALES[@state.Scale].size))
+                (p {}, "#{SCALES[@state.Scale].get_notes(@state.Note).join ' '}"))
             (Guitar
                 fretWidth: 50
                 fretHeight: 30

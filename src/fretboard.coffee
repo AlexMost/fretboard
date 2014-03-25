@@ -147,7 +147,7 @@ Guitar = React.createClass
                 if fret.data().note is @props.Note
                     fret.set_root()
 
-                if @state.playing_fret
+                if @state.playing_fret and @state.is_playing
                     [_sN, _fN] = @state.playing_fret
                     if _sN is sN and _fN is fN
                         fret.playStart()
@@ -170,6 +170,17 @@ Guitar = React.createClass
         (div
             style:
                 width: @state.fretsNum * @props.fretWidth
+            (DirectionDropdown
+                    current_dir: @state.direction
+                    onChange: (direction) => @setState {direction})
+            (input
+                type: "checkbox"
+                onChange: (ev) => @setState {repeat: ev.target.checked}
+                "repeat")
+            (input
+                type: "checkbox"
+                onChange: (ev) => @setState {changeDirection: ev.target.checked}
+                "change direction")
             (div
                 style:
                     position: "relative"
@@ -179,31 +190,6 @@ Guitar = React.createClass
                 (button
                     onClick: if @state.is_playing then @stopPlayScale else @playScale
                     (if @state.is_playing then "stop" else "play"))
-                (DirectionDropdown
-                    current_dir: @state.direction
-                    onChange: (direction) => @setState {direction})
-                (div {},
-                    (input
-                        type: "range"
-                        min: 0
-                        max: 1000
-                        step: 200
-                        style: {width: "200px"}
-                        onChange: (ev) => @setState {timeout: ev.target.value}
-                        value: @state.timeout
-                        "duration"
-                    ))
-                    (span {}, @state.timeout)
-                (div {},
-                    (input
-                        type: "checkbox"
-                        onChange: (ev) => @setState {repeat: ev.target.checked}
-                        "repeat"))
-                (div {},
-                    (input
-                        type: "checkbox"
-                        onChange: (ev) => @setState {changeDirection: ev.target.checked}
-                        "change direction"))
             )
         )
 

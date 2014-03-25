@@ -27,4 +27,5 @@ SCALES =
         get_notes: (Tonica) -> generate_scale Tonica, SCALES.Major
 
 
-module.exports = {SCALES, generate_scale}
+
+module.exports = {SCALES, generate_scale, STEP, hSTEP}
