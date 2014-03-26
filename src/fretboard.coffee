@@ -3,7 +3,7 @@ async = require 'async'
 {STANDART_TUNING, generateNotes} = require 'notes'
 {div, li, ul, span, button, input} = React.DOM
 {play_fret, load_fret} = require 'notes_sound'
-{Thumbler, Dropdown, DirectionDropdown} = require 'toolbox'
+{Thumbler, SimpleDropdown, DirectionDropdown, ToggleButton} = require 'toolbox'
 Selector = require 'selector'
 $ = require 'jquery'
 {emitter} = require 'ev_channel'
@@ -188,33 +188,39 @@ Guitar = React.createClass
         (div
             style:
                 width: @state.fretsNum * @props.fretWidth
-            (DirectionDropdown
-                    current_dir: @state.direction
-                    onChange: (direction) => @setState {direction})
-            (input
-                type: "checkbox"
-                onChange: (ev) => @setState {repeat: ev.target.checked}
-                "repeat")
-            (input
-                type: "checkbox"
-                onChange: (ev) => @setState {changeDirection: ev.target.checked}
-                "change direction")
+                margin: "auto"
+            (div
+                className: "btn-group top-toolbar"
+                (DirectionDropdown
+                        current_dir: @state.direction
+                        onChange: (direction) => @setState {direction})
+                (ToggleButton
+                    onChange: (repeat) => @setState {repeat}
+                    (span {className: "glyphicon glyphicon-repeat"}))
+                (ToggleButton
+                    onChange: (changeDirection) => @setState {changeDirection}
+                    (span {className: "glyphicon glyphicon-random"})))
             (div
                 className: "js-guitar"
                 SelectorComp
                 StringsList)
-            (Dropdown {
-                data: {options: notesOptions},
-                onChange: ({value: note}) => @props.onNoteChange note
-                selected: @props.Note
-            })
-            (Dropdown {
-                data: {options: scalesOptions},
-                onChange: ({value: scale}) => @props.onScaleChange scale
-                selected: @props.Scale
-            })
+            (div
+                className: "btn-group bot-toolbar"
+                (SimpleDropdown {
+                    options: notesOptions
+                    onChange: (note) => @props.onNoteChange note
+                    value: @props.Note
+                })
+
+                (SimpleDropdown {
+                    options: scalesOptions
+                    onChange: (scale) => @props.onScaleChange scale
+                    value: @props.Scale
+                }))
+
             (div {},
                 (button
+                    className: "btn btn-default"
                     onClick: if @state.is_playing then @stopPlayScale else @playScale
                     (if @state.is_playing then "stop" else "play"))
             )
