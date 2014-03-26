@@ -9,6 +9,8 @@ module.exports = (grunt) ->
                 ext: ".js"
 
         watch:
+            options:
+                atBegin: true
             files: "src/*.coffee"
             tasks: ["build"]
 

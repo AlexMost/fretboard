@@ -99,6 +99,17 @@ Guitar = React.createClass
                     ret_tabs.push [sNum, fNum]
         ret_tabs
 
+    componentDidMount: ->
+        jnode = $(@getDOMNode())
+        offset = jnode.find(".js-guitar").offset()
+        console.log "offset", offset
+        selectorWidth = @state.selectorFretsCount * @props.fretWidth
+        selector = @state.selector
+        selector.initialPos = {x: offset.left, y: offset.top}
+        selector.minX = offset.left
+        selector.maxX = offset.left + (@state.fretsNum * @props.fretWidth) - selectorWidth
+        @setState {selector}
+
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
         fretsNum = @props.data?.fretsNum or 16
@@ -114,11 +125,8 @@ Guitar = React.createClass
         selectorWidth = selectorFretsCount * @props.fretWidth
         playing_fret = null
         selector =
-            initialPos: {x: 0, y: 0}
             height: stringsNum * @props.fretHeight
             width: selectorWidth
-            minX: 0
-            maxX: fretsNum * @props.fretWidth - selectorWidth
             onXChange: @onSelectorMove
 
         selectorX = 0
@@ -135,6 +143,9 @@ Guitar = React.createClass
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
 
         selectorWidth = @state.selectorFretsCount * @props.fretWidth
+
+        return frets unless @state.selector.initialPos
+
         x = @state.selectorX
 
         for sN, string of frets
@@ -165,7 +176,11 @@ Guitar = React.createClass
                 Fwidth: @props.fretWidth
                 Fheight: @props.fretHeight
 
-        SelectorComp = (Selector @state.selector) if @state.selector
+        SelectorComp = if @state.selector.initialPos
+            (Selector @state.selector) if @state.selector
+        else
+            div()
+
 
         (div
             style:
@@ -182,8 +197,7 @@ Guitar = React.createClass
                 onChange: (ev) => @setState {changeDirection: ev.target.checked}
                 "change direction")
             (div
-                style:
-                    position: "relative"
+                className: "js-guitar"
                 SelectorComp
                 StringsList)
             (div {},
