@@ -3,14 +3,11 @@
 React = require 'react'
 {div, button, span, h2, p} = React.DOM
 {SCALES} = require 'scales'
-{NOTES} = require 'notes'
 {print_size} = require 'scales_page_utils'
-
-notesOptions = ([note, note] for note in NOTES)
-scalesOptions = ([scale, scale] for scale of SCALES)
 
 ScalesPage = React.createClass
     displayName: "ScalesPage"
+
     getInitialState: ->
         Note: "C"
         Scale: "Minor"
@@ -27,17 +24,9 @@ ScalesPage = React.createClass
                 fretHeight: 30
                 selectorFretsCount: 4
                 Note: @state.Note
-                Scale: @state.Scale)
-            (Dropdown {
-                data: {options: notesOptions},
-                onChange: ({value: Note}) => @setState {Note}
-                selected: @state.Note
-            })
-            (Dropdown {
-                data: {options: scalesOptions},
-                onChange: ({value: Scale}) => @setState {Scale}
-                selected: @state.Scale
-            }))
+                Scale: @state.Scale,
+                onNoteChange: (Note) => @setState {Note}
+                onScaleChange: (Scale) => @setState {Scale}))
 
 React.renderComponent(
     ScalesPage()

@@ -7,7 +7,11 @@ async = require 'async'
 Selector = require 'selector'
 $ = require 'jquery'
 {emitter} = require 'ev_channel'
+{NOTES} = require 'notes'
 {SCALES} = require 'scales'
+
+notesOptions = ([note, note] for note in NOTES)
+scalesOptions = ([scale, scale] for scale of SCALES)
 
 {
 EVENT_SOUNDS_LOADING_START
@@ -57,6 +61,7 @@ Guitar = React.createClass
             play_fret sNum, fNum, ->
                 setTimeout(
                     ->
+                        self.setState {playing_fret: null}
                         if self.state.is_playing then cb?() else cb?("stop")
                     self.state.timeout)
 
@@ -102,13 +107,12 @@ Guitar = React.createClass
     componentDidMount: ->
         jnode = $(@getDOMNode())
         offset = jnode.find(".js-guitar").offset()
-        console.log "offset", offset
         selectorWidth = @state.selectorFretsCount * @props.fretWidth
         selector = @state.selector
         selector.initialPos = {x: offset.left, y: offset.top}
         selector.minX = offset.left
         selector.maxX = offset.left + (@state.fretsNum * @props.fretWidth) - selectorWidth
-        @setState {selector}
+        @setState {selector, selectorX: offset.left}
 
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
@@ -124,16 +128,15 @@ Guitar = React.createClass
         changeDirection = false
         selectorWidth = selectorFretsCount * @props.fretWidth
         playing_fret = null
+
         selector =
             height: stringsNum * @props.fretHeight
             width: selectorWidth
             onXChange: @onSelectorMove
 
-        selectorX = 0
-
         {stringsNum, fretsNum, notesMap, timeout, selector,
          play_reverse, is_playing, selectorFretsCount, direction, repeat,
-         changeDirection, selector, selectorX, playing_fret}
+         changeDirection, selector, playing_fret}
 
     onSelectorMove: (x) -> @setState {selectorX: x, is_playing: false}
 
@@ -169,6 +172,7 @@ Guitar = React.createClass
 
     render: ->
         frets = @get_frets()
+
         StringsList = [0..@state.stringsNum].map (num) =>
             GString
                 data:
@@ -180,7 +184,6 @@ Guitar = React.createClass
             (Selector @state.selector) if @state.selector
         else
             div()
-
 
         (div
             style:
@@ -200,6 +203,16 @@ Guitar = React.createClass
                 className: "js-guitar"
                 SelectorComp
                 StringsList)
+            (Dropdown {
+                data: {options: notesOptions},
+                onChange: ({value: note}) => @props.onNoteChange note
+                selected: @props.Note
+            })
+            (Dropdown {
+                data: {options: scalesOptions},
+                onChange: ({value: scale}) => @props.onScaleChange scale
+                selected: @props.Scale
+            })
             (div {},
                 (button
                     onClick: if @state.is_playing then @stopPlayScale else @playScale

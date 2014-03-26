@@ -17,7 +17,6 @@ Selector = React.createClass
         emitter.sub EVENT_SOUNDS_LOADING_STOP, @turnOfLoader
 
     getInitialState: ->
-        console.log @props.initialPos
         pos: @props.initialPos
         dragging: false
         rel: null
