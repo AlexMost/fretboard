@@ -33,6 +33,7 @@ module.exports = (grunt) ->
             main: {expand: true, src: 'index.html', dest: 'dist'}
             css: {expand: true, src: 'css/*', dest: 'dist'}
             resources: {expand: true, src: 'resources/**', dest: 'dist'}
+            fonts: {expand: true, src: 'fonts/*', dest: 'dist'}
 
         'gh-pages':
             options:
