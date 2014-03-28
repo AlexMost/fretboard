@@ -31,13 +31,10 @@ Draggable = ({useX, useY, minX, maxX}) ->
         {minX, maxX} = @props
 
         pos.x = if useX and newX >= minX and newX <= maxX
-            console.log "settings onmousemove", newX, minX, maxX
             newX
         else if newX <= minX
-            console.log "on mouse move set min", newX, minX, maxX
             minX
         else if newX >= maxX
-            console.log "on mouse move set max", newX, minX, maxX
             maxX
 
         @props.onXChange?(pos.x)
