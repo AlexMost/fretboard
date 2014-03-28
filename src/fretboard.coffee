@@ -19,13 +19,15 @@ EVENT_SOUNDS_LOADING_STOP
 } = require 'defs'
 
 
-blFret = (sNum, fNum, note, checked, playing, selected, root_note) ->
+blFret = (sNum, fNum, note, checked, playing,
+          selected, root_note, is_open) ->
     checked or= false
     playing or= false
     selected or=false
     root_note or=false
+    is_open or=false
 
-    data: -> {sNum, fNum, note, checked, playing, selected, root_note}
+    data: -> {sNum, fNum, note, checked, playing, selected, root_note, is_open}
     playStart: -> playing = true
     playStop: -> playing = false
     check: -> checked = true
@@ -33,6 +35,7 @@ blFret = (sNum, fNum, note, checked, playing, selected, root_note) ->
     select: -> selected = true
     unselect: -> selected = false
     set_root: -> root_note = true
+    set_open: -> is_open = true
 
 
 blString = (sNum, frets) ->
@@ -43,7 +46,7 @@ getClearFrets = (sNum, fNum, notesMap) ->
     frets = {}
     for i in [1..sNum]
         frets[i] = {}
-        for j in [1..fNum]
+        for j in [0..fNum]
             frets[i][j] = blFret i, j, notesMap[i][j], false, false
     frets
 
@@ -109,10 +112,11 @@ Guitar = React.createClass
         offset = jnode.find(".js-guitar").offset()
         selectorWidth = @state.selectorFretsCount * @props.fretWidth
         selector = @state.selector
-        selector.initialPos = {x: offset.left, y: offset.top}
-        selector.minX = offset.left
-        selector.maxX = offset.left + (@state.fretsNum * @props.fretWidth) - selectorWidth
-        @setState {selector, selectorX: offset.left}
+        selectorX = offset.left + @props.fretWidth
+        selector.initialPos = {x: selectorX, y: offset.top}
+        selector.minX = offset.left + @props.fretWidth
+        selector.maxX = offset.left + ((@state.fretsNum+1) * @props.fretWidth) - selectorWidth
+        @setState {selector, selectorX}
 
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
@@ -142,9 +146,7 @@ Guitar = React.createClass
 
     get_frets: ->
         notes = (SCALES[@props.Scale].get_notes @props.Note)
-
         frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
-
         selectorWidth = @state.selectorFretsCount * @props.fretWidth
 
         return frets unless @state.selector.initialPos
@@ -168,6 +170,9 @@ Guitar = React.createClass
 
                 if fret.data().note in notes
                     fret.check()
+
+                fret.set_open() if fN is "0"
+
         frets
 
 
@@ -189,7 +194,7 @@ Guitar = React.createClass
 
         FretNumbers =
             (div {className: "row", style: {marign: 0}},
-                [1..@state.fretsNum].map (num) =>
+                [0..@state.fretsNum].map (num) =>
                     active = ""
                     x = @state.selectorX
                     if x
@@ -200,12 +205,12 @@ Guitar = React.createClass
                     (div
                         className: "col-md-1 fretnum #{active}"
                         style: {width: "#{@props.fretWidth}px"}
-                        num)
+                        num unless num is 0)
             )
 
         (div
             style:
-                width: @state.fretsNum * @props.fretWidth
+                width: (@state.fretsNum+1) * @props.fretWidth
                 margin: "auto"
             (div
                 className: "btn-group top-toolbar"
@@ -264,6 +269,7 @@ Fret = React.createClass
     displayName: "Fret"
     render: ->
         text = ''
+        fretClass = "fret"
 
         className = if @props.data.checked then "on shadow" else "off"
         if @props.data.checked and @props.data.selected
@@ -277,8 +283,13 @@ Fret = React.createClass
 
         playClass = if @props.data.playing then "playing" else ''
 
+        if @props.data.is_open
+            className = "open shadow"
+            text = @props.data.note
+            fretClass = ""
+
         attrs =
-            className: "col-md-1 fret padding0"
+            className: "col-md-1 #{fretClass} padding0"
             style:
                 width: @props.width
                 height: @props.height

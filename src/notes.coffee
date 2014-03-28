@@ -30,7 +30,7 @@ generateNotes = (sCount, fCount, tuning) ->
     # to make 1st element of array to be the 1st string
     [[]].concat (for sNum in [0..sCount-1]
         noteGen = getNoteGenerator tuning[sNum]
-        (noteGen() for i in [1..fCount]))
+        (noteGen() for i in [0..fCount]))
 
 
 module.exports = {
