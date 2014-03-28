@@ -4,6 +4,27 @@
     border-right: 1px solid black;
 }
 
+.fretnum {
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.fretnum:hover{
+    background: lightgray;
+}
+
+.active-num {
+    color: red;
+}
+
 .string {
     position: absolute;
     height: 50%;
