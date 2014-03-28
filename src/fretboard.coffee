@@ -170,6 +170,7 @@ Guitar = React.createClass
                     fret.check()
         frets
 
+
     render: ->
         frets = @get_frets()
 
@@ -180,10 +181,27 @@ Guitar = React.createClass
                 Fwidth: @props.fretWidth
                 Fheight: @props.fretHeight
 
+
         SelectorComp = if @state.selector.initialPos
             (Selector @state.selector) if @state.selector
         else
             div()
+
+        FretNumbers =
+            (div {className: "row", style: {marign: 0}},
+                [1..@state.fretsNum].map (num) =>
+                    active = ""
+                    x = @state.selectorX
+                    if x
+                        selectorWidth = @state.selectorFretsCount * @props.fretWidth
+                        fret_offset = @state.selector.initialPos.x + num * @props.fretWidth
+                        if fret_offset > x and fret_offset < x + selectorWidth + @props.fretWidth
+                            active = "active-num"
+                    (div
+                        className: "col-md-1 fretnum #{active}"
+                        style: {width: "#{@props.fretWidth}px"}
+                        num)
+            )
 
         (div
             style:
@@ -204,6 +222,7 @@ Guitar = React.createClass
                 className: "js-guitar"
                 SelectorComp
                 StringsList)
+            FretNumbers
             (div
                 className: "btn-group bot-toolbar"
                 (SimpleDropdown {
