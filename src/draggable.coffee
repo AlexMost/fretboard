@@ -12,7 +12,9 @@ Draggable = ({useX, useY, minX, maxX}) ->
 
     onMouseDown: (e) ->
         return if e.button isnt 0
-        @setState {dragging: true}
+        {top, left} = $(@getDOMNode()).offset()
+        relx = e.pageX - left
+        @setState {dragging: true, relx}
         e.stopPropagation()
         e.preventDefault()
 
@@ -25,7 +27,7 @@ Draggable = ({useX, useY, minX, maxX}) ->
         return unless @state.dragging
 
         pos = {}
-        newX = e.pageX
+        newX = e.pageX - @state.relx
         {minX, maxX} = @props
 
         pos.x = if useX and newX >= minX and newX <= maxX
