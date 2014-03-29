@@ -11,12 +11,13 @@ ScalesPage = React.createClass
     getInitialState: ->
         Note: "C"
         Scale: "Minor"
+        tuning: "Standart"
 
     render: ->
 
         (div {},
             (div {},
-                (h2 {className: "text-center"}, "#{@state.Note} #{@state.Scale}")
+                (h2 {className: "text-center"}, "#{@state.Note} #{@state.Scale} (#{@state.tuning} tuning)")
                 (p
                     className: "text-center text-muted text-bold"
                     "(#{print_size(SCALES[@state.Scale].size)})")
@@ -29,8 +30,10 @@ ScalesPage = React.createClass
                 selectorFretsCount: 4
                 Note: @state.Note
                 Scale: @state.Scale,
+                tuning: @state.tuning
                 onNoteChange: (Note) => @setState {Note}
-                onScaleChange: (Scale) => @setState {Scale}))
+                onScaleChange: (Scale) => @setState {Scale}
+                onTuningChange: (tuning) => @setState {tuning}))
 
 React.renderComponent(
     ScalesPage()

@@ -3,6 +3,9 @@ NOTES = [C,    Cd,   D,   Dd,   E,   F,   Fd,   G,   Gd,   A,   Ad,   B] = \
 
 
 STANDART_TUNING = [E, B, G, D, A, E]
+DROP_D_TUNING = [E, B, G, D, A, D]
+ONE_STEP_DOWN = [D, A, F, C, G, D]
+DROP_C_TUNING = [D, A, F, C, G, C]
 
 
 get_note_index = (note) ->
@@ -36,6 +39,9 @@ generateNotes = (sCount, fCount, tuning) ->
 module.exports = {
     getNoteGenerator
     STANDART_TUNING
+    DROP_D_TUNING
+    ONE_STEP_DOWN
+    DROP_C_TUNING
     NOTES
     generateNotes
     get_note_index

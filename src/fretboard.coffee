@@ -1,6 +1,7 @@
 React = require 'react'
 async = require 'async'
-{STANDART_TUNING, generateNotes} = require 'notes'
+{STANDART_TUNING, DROP_D_TUNING, DROP_C_TUNING,
+ONE_STEP_DOWN, generateNotes} = require 'notes'
 {div, li, ul, span, button, input} = React.DOM
 {play_fret, load_fret} = require 'notes_sound'
 {Thumbler, SimpleDropdown, DirectionDropdown, ToggleButton} = require 'toolbox'
@@ -12,6 +13,19 @@ $ = require 'jquery'
 
 notesOptions = ([note, note] for note in NOTES)
 scalesOptions = ([scale, scale] for scale of SCALES)
+
+tuningMap =
+    Standart: STANDART_TUNING
+    DropD: DROP_D_TUNING
+    OneStepDown: ONE_STEP_DOWN
+    DropC: DROP_C_TUNING
+
+tuningOptions = [
+    ["Standart", "Standart"]
+    ["DropD", "DropD"]
+    ["DropC", "DropC"]
+    ["OneStepDown", "OneStepDown"]
+]
 
 {
 EVENT_SOUNDS_LOADING_START
@@ -121,7 +135,6 @@ Guitar = React.createClass
     getInitialState: ->
         stringsNum = @props.data?.stringsNum or 6
         fretsNum = @props.data?.fretsNum or 16
-        notesMap = generateNotes stringsNum, fretsNum, STANDART_TUNING
         selectorFretsCount = @props.selectorFretsCount or 4
         timeout = 400
         selector = null
@@ -138,15 +151,17 @@ Guitar = React.createClass
             width: selectorWidth
             onXChange: @onSelectorMove
 
-        {stringsNum, fretsNum, notesMap, timeout, selector,
+        {stringsNum, fretsNum, timeout, selector,
          play_reverse, is_playing, selectorFretsCount, direction, repeat,
          changeDirection, selector, playing_fret}
 
     onSelectorMove: (x) -> @setState {selectorX: x, is_playing: false}
 
     get_frets: ->
+        tuning = tuningMap[@props.tuning]
+        notesMap = generateNotes @state.stringsNum, @state.fretsNum, tuning
         notes = (SCALES[@props.Scale].get_notes @props.Note)
-        frets = getClearFrets @state.stringsNum, @state.fretsNum, @state.notesMap
+        frets = getClearFrets @state.stringsNum, @state.fretsNum, notesMap
         selectorWidth = @state.selectorFretsCount * @props.fretWidth
 
         return frets unless @state.selector.initialPos
@@ -241,6 +256,12 @@ Guitar = React.createClass
                     onChange: (scale) => @props.onScaleChange scale
                     value: @props.Scale
                 }))
+
+                (SimpleDropdown {
+                    options: tuningOptions
+                    onChange: (tuning) => @props.onTuningChange tuning
+                    value: @props.tuning
+                })
 
             (div {},
                 (button
