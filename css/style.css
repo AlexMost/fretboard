@@ -60,6 +60,11 @@
     background: cornflowerblue;
 }
 
+.open {
+    background: white;
+    color: black;
+}
+
 .on-selected-root {
     color: white;
     background: red;
