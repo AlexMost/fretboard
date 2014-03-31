@@ -214,21 +214,31 @@ Guitar = React.createClass
                 SelectorComp
                 StringsList)
             FretNumbers
-            (div
-                className: "btn-group bot-toolbar"
-                (button
-                    className: "btn btn-default"
-                    onClick: if @state.is_playing then @stopPlayScale else @playScale
-                    (if @state.is_playing then "stop" else "play"))
-                (DirectionDropdown
-                        current_dir: @state.direction
-                        onChange: (direction) => @setState {direction})
-                (ToggleButton
-                    onChange: (repeat) => @setState {repeat}
-                    (span {className: "glyphicon glyphicon-repeat"}))
-                (ToggleButton
-                    onChange: (changeDirection) => @setState {changeDirection}
-                    (span {className: "glyphicon glyphicon-random"})))
+            (div {className: "text-center"},
+                (div
+                    className: "btn-group bot-toolbar"
+                    (button
+                        className: "btn btn-default"
+                        onClick: if @state.is_playing then @stopPlayScale else @playScale
+                        if @state.is_playing
+                            (span {className: "glyphicon glyphicon-stop"}, "")
+                        else
+                            (span {className: "glyphicon glyphicon-play"}, "")
+                    )
+                    (ToggleButton
+                        onChange: => @toggleDirection()
+                        if @state.direction is "UP"
+                            (span {className: "glyphicon glyphicon-arrow-down"})
+                        else
+                            (span {className: "glyphicon glyphicon-arrow-up"})
+                    )
+                    (ToggleButton
+                        onChange: (repeat) => @setState {repeat}
+                        (span {className: "glyphicon glyphicon-repeat"}))
+                    (ToggleButton
+                        onChange: (changeDirection) => @setState {changeDirection}
+                        (span {className: "glyphicon glyphicon-random"})))
+            )
         )
 
 
