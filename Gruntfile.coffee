@@ -26,7 +26,6 @@ module.exports = (grunt) ->
                         'lib/howler.js'
                     ]
 
-
         uglify:
             options:
                 banner: '/* <%= grunt.template.today("yyyy-mm-dd h:MM:ss") %> */'
@@ -48,6 +47,15 @@ module.exports = (grunt) ->
                 base: 'dist'
             src: ['**']
 
+        notify:
+            build:
+                options:
+                    title: 'Build'
+                    message: 'Build is done'
+            deploy:
+                options:
+                    title: 'Deploy'
+                    message: 'Deployed to gh pages'
 
     grunt.loadNpmTasks "grunt-contrib-watch"
     grunt.loadNpmTasks "grunt-contrib-coffee"
@@ -55,7 +63,8 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks "grunt-contrib-copy"
     grunt.loadNpmTasks "grunt-gh-pages"
     grunt.loadNpmTasks "grunt-browserify"
+    grunt.loadNpmTasks "grunt-notify"
 
-    grunt.registerTask "build", ["coffee:src", "browserify"]
+    grunt.registerTask "build", ["coffee:src", "browserify", "notify:build"]
     grunt.registerTask "deploy", ["build", "uglify", "copy"]
-    grunt.registerTask "deploy-gh", ["deploy", "gh-pages"]
+    grunt.registerTask "deploy-gh", ["deploy", "gh-pages", "notify:deploy"]
