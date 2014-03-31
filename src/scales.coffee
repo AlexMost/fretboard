@@ -33,13 +33,23 @@ SCALES =
 
     Arabic:
         desc: "Arabic scale"
-        size: [hSTEP,BigSTEP,hSTEP,hSTEP,BigSTEP,hSTEP,STEP]
+        size: [hSTEP, BigSTEP, hSTEP, hSTEP, BigSTEP, hSTEP, STEP]
         get_notes: (Tonica) -> generate_scale Tonica, SCALES.Arabic
 
     Blues:
         desc: "Blues scale"
-        size: [BigSTEP,STEP,hSTEP,hSTEP,BigSTEP,STEP]
+        size: [BigSTEP, STEP, hSTEP, hSTEP, BigSTEP, STEP]
         get_notes: (Tonica) -> generate_scale Tonica, SCALES.Blues
+
+    PentatonicMinor:
+        desc: "Pentatonic Minor"
+        size: [BigSTEP, STEP, STEP, BigSTEP, STEP]
+        get_notes: (Tonica) -> generate_scale Tonica, SCALES.PentatonicMinor
+
+    PentatonicMajor:
+        desc: "Pentatonic Major"
+        size: [STEP, STEP, BigSTEP, STEP, BigSTEP]
+        get_notes: (Tonica) -> generate_scale Tonica, SCALES.PentatonicMajor
 
 
 module.exports = {SCALES, generate_scale, STEP, hSTEP, BigSTEP}
