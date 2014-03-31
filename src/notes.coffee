@@ -4,7 +4,7 @@ NOTES = [C,    Cd,   D,   Dd,   E,   F,   Fd,   G,   Gd,   A,   Ad,   B] = \
 
 STANDART_TUNING = [E, B, G, D, A, E]
 DROP_D_TUNING = [E, B, G, D, A, D]
-ONE_STEP_DOWN = [D, A, F, C, G, D]
+ONE_STEP_DOWN = [Dd, Ad, Fd, Cd, Gd, Dd]
 DROP_C_TUNING = [D, A, F, C, G, C]
 
 
