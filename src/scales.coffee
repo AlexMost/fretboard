@@ -1,4 +1,4 @@
-{get_note_index, get_new_index, NOTES} = require 'notes'
+{get_note_index, get_new_index, NOTES} = require './notes'
 
 BigSTEP = 3
 STEP = 2

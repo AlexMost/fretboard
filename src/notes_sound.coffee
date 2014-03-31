@@ -1,4 +1,4 @@
-{Howl} = require 'howler'
+{Howl} = require '../lib/howler'
 
 sounds_cache = {1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}}
 

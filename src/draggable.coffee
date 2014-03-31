@@ -1,5 +1,5 @@
 React = require 'react'
-$ = require 'jquery'
+$ = require '../lib/jquery'
 
 Draggable = ({useX, useY, minX, maxX}) ->
     componentDidUpdate: (props, state) ->

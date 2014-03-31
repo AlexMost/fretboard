@@ -1,12 +1,12 @@
 React = require 'react'
-Draggable = require 'draggable'
+Draggable = require './draggable'
 {div, span, img} = React.DOM
-{emitter} = require 'ev_channel'
+{emitter} = require '../lib/ev_channel'
 
 {
 EVENT_SOUNDS_LOADING_START
 EVENT_SOUNDS_LOADING_STOP
-} = require 'defs'
+} = require './defs'
 
 Selector = React.createClass
     displayName: "Selector"

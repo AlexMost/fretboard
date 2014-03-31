@@ -1,19 +1,19 @@
 React = require 'react'
 async = require 'async'
-{generateNotes} = require 'notes'
+{generateNotes} = require './notes'
 {div, li, ul, span, button, input} = React.DOM
-{play_fret, load_fret} = require 'notes_sound'
-{Thumbler, SimpleDropdown, DirectionDropdown, ToggleButton} = require 'toolbox'
-Selector = require 'selector'
-$ = require 'jquery'
-{emitter} = require 'ev_channel'
-{SCALES} = require 'scales'
+{play_fret, load_fret} = require './notes_sound'
+{Thumbler, SimpleDropdown, DirectionDropdown, ToggleButton} = require './toolbox'
+Selector = require './selector'
+$ = require '../lib/jquery'
+{emitter} = require '../lib/ev_channel'
+{SCALES} = require './scales'
 
 
 {
 EVENT_SOUNDS_LOADING_START
 EVENT_SOUNDS_LOADING_STOP
-} = require 'defs'
+} = require './defs'
 
 
 blFret = (sNum, fNum, note, checked, playing,

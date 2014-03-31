@@ -14,10 +14,18 @@ module.exports = (grunt) ->
             files: "src/*.coffee"
             tasks: ["build"]
 
-        stitch:
-            options:
-                paths: ['lib-js/', 'lib/']
+        browserify:
+            scales_page:
+                src: ['lib-js/scales_page.js']
                 dest: 'public/app.js'
+            options:
+                browserifyOptions:
+                    noParse: [
+                        'lib/ev_channel.js'
+                        'lib/jquery.js'
+                        'lib/howler.js'
+                    ]
+
 
         uglify:
             options:
@@ -46,8 +54,8 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks "grunt-contrib-uglify"
     grunt.loadNpmTasks "grunt-contrib-copy"
     grunt.loadNpmTasks "grunt-gh-pages"
-    grunt.loadNpmTasks "grunt-stitch"
+    grunt.loadNpmTasks "grunt-browserify"
 
-    grunt.registerTask "build", ["coffee:src", "stitch"]
+    grunt.registerTask "build", ["coffee:src", "browserify"]
     grunt.registerTask "deploy", ["build", "uglify", "copy"]
     grunt.registerTask "deploy-gh", ["deploy", "gh-pages"]
