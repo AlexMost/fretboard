@@ -105,16 +105,10 @@
     font-weight: bold;
 }
 
-.top-toolbar {
+.top-toolbar, .bot-toolbar {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: -15px;
-}
-
-.bot-toolbar {
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 
