@@ -216,7 +216,7 @@ Guitar = React.createClass
             FretNumbers
             (div {className: "text-center"},
                 (div
-                    className: "btn-group bot-toolbar"
+                    className: "btn-group bot-toolbar panel panel-default"
                     (button
                         className: "btn btn-default"
                         onClick: if @state.is_playing then @stopPlayScale else @playScale

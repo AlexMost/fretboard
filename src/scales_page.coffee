@@ -45,7 +45,7 @@ ScalesPage = React.createClass
             (div
                 style: {width: "850px", margin: "auto"}
                 (div
-                    className: "btn-group top-toolbar"
+                    className: "btn-group top-toolbar panel panel-default"
                     (SimpleDropdown {
                         options: notesOptions
                         onChange: (Note) => @setState {Note}
