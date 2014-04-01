@@ -1,3 +1,4 @@
+[![Dependency Status](https://david-dm.org/alexmost/fretboard.png)](https://david-dm.org/alexmost/fretboard)
 [![devDependency Status](https://david-dm.org/alexmost/fretboard/dev-status.png?theme=shields.io)](https://david-dm.org/alexmost/fretboard#info=devDependencies)
 fretboard 
 =========
