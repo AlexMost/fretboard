@@ -24,6 +24,8 @@ module.exports = (grunt) ->
                         'lib/ev_channel.js'
                         'lib/jquery.js'
                         'lib/howler.js'
+                        'lib/react.js'
+                        'lib/async.js'
                     ]
 
         uglify:

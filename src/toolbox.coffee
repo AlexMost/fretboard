@@ -1,4 +1,4 @@
-React = require 'react'
+React = require '../lib/react'
 {select, option, button, ul, li, span, div, a} = React.DOM
 
 

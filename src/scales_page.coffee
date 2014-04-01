@@ -1,6 +1,6 @@
+React = require '../lib/react'
 {Guitar} = require './fretboard'
 {SimpleDropdown} = require './toolbox'
-React = require 'react'
 {div, button, span, h2, p, strong} = React.DOM
 {SCALES} = require './scales'
 {STANDART_TUNING, DROP_D_TUNING, DROP_C_TUNING,

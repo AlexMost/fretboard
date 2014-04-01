@@ -1,12 +1,13 @@
-React = require 'react'
-async = require 'async'
+async = require '../lib/async'
+React = require '../lib/react'
+$ = require '../lib/jquery'
+{emitter} = require '../lib/ev_channel'
+
 {generateNotes} = require './notes'
 {div, li, ul, span, button, input} = React.DOM
 {play_fret, load_fret} = require './notes_sound'
 {Thumbler, SimpleDropdown, DirectionDropdown, ToggleButton} = require './toolbox'
 Selector = require './selector'
-$ = require '../lib/jquery'
-{emitter} = require '../lib/ev_channel'
 {SCALES} = require './scales'
 
 

@@ -1,7 +1,8 @@
-React = require 'react'
+React = require '../lib/react'
+{emitter} = require '../lib/ev_channel'
+
 Draggable = require './draggable'
 {div, span, img} = React.DOM
-{emitter} = require '../lib/ev_channel'
 
 {
 EVENT_SOUNDS_LOADING_START
