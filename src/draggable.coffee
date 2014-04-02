@@ -1,4 +1,4 @@
-React = require '../lib/react'
+React = require 'react'
 $ = require '../lib/jquery'
 
 Draggable = ({useX, useY, minX, maxX}) ->

@@ -1,3 +1,5 @@
+react_render_task = require './tasks/react_render'
+
 module.exports = (grunt) ->
     grunt.config.init
         coffee:
@@ -9,14 +11,15 @@ module.exports = (grunt) ->
                 ext: ".js"
 
         watch:
-            options:
-                atBegin: true
-            files: "src/*.coffee"
-            tasks: ["build"]
+            src:
+                options:
+                    atBegin: true
+                files: "src/**/*.coffee"
+                tasks: ["build:src"]
 
         browserify:
             scales_page:
-                src: ['lib-js/scales_page.js']
+                src: ['lib-js/pages/scales_page.js']
                 dest: 'public/app.js'
             options:
                 browserifyOptions:
@@ -24,7 +27,6 @@ module.exports = (grunt) ->
                         'lib/ev_channel.js'
                         'lib/jquery.js'
                         'lib/howler.js'
-                        'lib/react.js'
                         'lib/async.js'
                     ]
 
@@ -59,6 +61,13 @@ module.exports = (grunt) ->
                     title: 'Deploy'
                     message: 'Deployed to gh pages'
 
+        react_render:
+            options:
+                basedir: __dirname
+            index:
+                options:
+                    src: "./dist/index.html"
+
     grunt.loadNpmTasks "grunt-contrib-watch"
     grunt.loadNpmTasks "grunt-contrib-coffee"
     grunt.loadNpmTasks "grunt-contrib-uglify"
@@ -66,7 +75,8 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks "grunt-gh-pages"
     grunt.loadNpmTasks "grunt-browserify"
     grunt.loadNpmTasks "grunt-notify"
+    react_render_task(grunt)
 
-    grunt.registerTask "build", ["coffee:src", "browserify", "notify:build"]
-    grunt.registerTask "deploy", ["build", "uglify", "copy"]
+    grunt.registerTask "build", ["coffee", "browserify", "notify:build"]
+    grunt.registerTask "deploy", ["build", "uglify", "copy", "react_render"]
     grunt.registerTask "deploy-gh", ["deploy", "gh-pages", "notify:deploy"]

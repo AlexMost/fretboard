@@ -1,4 +1,4 @@
-{STEP, hSTEP, BigSTEP} = require './scales'
+{STEP, hSTEP, BigSTEP} = require './../scales'
 
 print_size = (size) ->
     (for s in size

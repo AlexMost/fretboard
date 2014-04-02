@@ -1,4 +1,4 @@
-React = require '../lib/react'
+React = require 'react'
 {emitter} = require '../lib/ev_channel'
 
 Draggable = require './draggable'

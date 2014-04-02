@@ -1,5 +1,5 @@
 async = require '../lib/async'
-React = require '../lib/react'
+React = require 'react'
 $ = require '../lib/jquery'
 {emitter} = require '../lib/ev_channel'
 

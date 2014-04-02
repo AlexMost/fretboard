@@ -1,10 +1,10 @@
-React = require '../lib/react'
-{Guitar} = require './fretboard'
-{SimpleDropdown} = require './toolbox'
+React = require 'react'
+{Guitar} = require './../fretboard'
+{SimpleDropdown} = require './../toolbox'
 {div, button, span, h2, p, strong} = React.DOM
-{SCALES} = require './scales'
+{SCALES} = require './../scales'
 {STANDART_TUNING, DROP_D_TUNING, DROP_C_TUNING,
-ONE_STEP_DOWN, generateNotes, NOTES} = require './notes'
+ONE_STEP_DOWN, generateNotes, NOTES} = require './../notes'
 {print_size} = require './scales_page_utils'
 
 
@@ -73,8 +73,4 @@ ScalesPage = React.createClass
                 tuning: tuningMap[@state.tuning])
         )
 
-
-React.renderComponent(
-    ScalesPage()
-    document.getElementById "container"
-)
+module.exports = ScalesPage
