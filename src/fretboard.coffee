@@ -110,9 +110,9 @@ Guitar = React.createClass
         offset = jnode.find(".js-guitar").offset()
         selectorWidth = @state.selectorFretsCount * @props.fretWidth
         selector = @state.selector
-        selectorX = offset.left + @props.fretWidth
+        selectorX = offset.left
         selector.initialPos = {x: selectorX, y: offset.top}
-        selector.minX = offset.left + @props.fretWidth
+        selector.minX = offset.left
         selector.maxX = offset.left + ((@state.fretsNum+1) * @props.fretWidth) - selectorWidth
         @setState {selector, selectorX}
 
@@ -155,7 +155,7 @@ Guitar = React.createClass
             for fN, fret of string
                 fret_offset = @state.selector.initialPos.x + fN * @props.fretWidth
 
-                if fret_offset > x and fret_offset < x + selectorWidth + @props.fretWidth
+                if fret_offset >= x and fret_offset < x + selectorWidth
                     fret.select()
 
                 if fret.data().note is @props.Note
@@ -276,7 +276,8 @@ Fret = React.createClass
         playClass = if @props.data.playing then "playing" else ''
 
         if @props.data.is_open
-            className = "open shadow"
+            unless @props.data.checked
+                className = "#{className} open shadow"
             text = @props.data.note
             fretClass = ""
 
