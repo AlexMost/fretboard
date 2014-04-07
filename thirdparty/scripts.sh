@@ -4,7 +4,7 @@
 for i in {1..6}
 do
     cd resources/${i}string/wav
-    
+
     for file in *.wav
     do
         lame -b 192 -h "$file" "${file%.wav}.mp3"
