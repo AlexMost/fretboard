@@ -3,26 +3,13 @@ React = require 'react'
 {SimpleDropdown} = require './../toolbox'
 {div, button, span, h2, p, strong} = React.DOM
 {SCALES} = require './../scales'
-{STANDART_TUNING, DROP_D_TUNING, DROP_C_TUNING,
-ONE_STEP_DOWN, generateNotes, NOTES} = require './../notes'
+{generateNotes, NOTES, TUNINGS} = require './../notes'
 {print_size} = require './scales_page_utils'
 
 
 notesOptions = ([note, note] for note in NOTES)
 scalesOptions = ([scale, scale] for scale of SCALES)
-
-tuningMap =
-    Standart: STANDART_TUNING
-    DropD: DROP_D_TUNING
-    OneStepDown: ONE_STEP_DOWN
-    DropC: DROP_C_TUNING
-
-tuningOptions = [
-    ["Standart", "Standart"]
-    ["DropD", "DropD"]
-    ["DropC", "DropC"]
-    ["OneStepDown", "OneStepDown"]
-]
+tuningOptions = ([tuning, value.name] for tuning, value of TUNINGS)
 
 ScalesPage = React.createClass
     displayName: "ScalesPage"
@@ -33,9 +20,10 @@ ScalesPage = React.createClass
         tuning: "Standart"
 
     render: ->
+        tuningName = TUNINGS[@state.tuning].name
         (div {},
             (div {},
-                (h2 {className: "text-center"}, "#{@state.Note} #{@state.Scale} (#{@state.tuning} tuning)")
+                (h2 {className: "text-center"}, "#{@state.Note} #{@state.Scale} (#{tuningName} tuning)")
                 (p
                     className: "text-center text-muted text-bold"
                     "(#{print_size(SCALES[@state.Scale].size)})")
@@ -70,7 +58,7 @@ ScalesPage = React.createClass
                 selectorFretsCount: 4
                 Note: @state.Note
                 Scale: @state.Scale,
-                tuning: tuningMap[@state.tuning])
+                tuning: TUNINGS[@state.tuning].notes)
         )
 
 module.exports = ScalesPage

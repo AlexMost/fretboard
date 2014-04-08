@@ -59,7 +59,7 @@ SimpleDropdown = React.createClass
 
     getInitialState: ->
         isOpen: false
-        value: @props.value
+        value: @props.value or ""
 
     toggle: -> @setState {isOpen: !@state.isOpen}
 
@@ -77,13 +77,16 @@ SimpleDropdown = React.createClass
 
         openCls = if @state.isOpen then "open" else ""
 
+        currentOption = (@props.options.filter ([value, text]) =>
+            value.toString() is @state.value.toString())?[0]
+
         (div
             className: "btn-group #{openCls}"
             (button
                 className: "btn btn-default"
                 onClick: @toggle
                 (span {className: "glyphicon"}, "")
-                @state.value
+                currentOption?[1]
                 (span {className: "caret"}, ""))
             (ul
                 className: "dropdown-menu"

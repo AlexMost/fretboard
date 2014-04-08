@@ -2,10 +2,26 @@ NOTES = [C,    Cd,   D,   Dd,   E,   F,   Fd,   G,   Gd,   A,   Ad,   B] = \
         ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
 
-STANDART_TUNING = [E, B, G, D, A, E]
-DROP_D_TUNING = [E, B, G, D, A, D]
-ONE_STEP_DOWN = [Dd, Ad, Fd, Cd, Gd, Dd]
-DROP_C_TUNING = [D, A, F, C, G, C]
+TUNINGS =
+    "Standart":
+        name: "Standart E"
+        notes:  [E, B, G, D, A, E]
+        offset: [0, 0, 0, 0, 0, 0]
+
+    "DropD":
+        name: "Drop D"
+        notes:  [E, B, G, D, A,  D]
+        offset: [0, 0, 0, 0, 0, -1]
+
+    "1StepDown":
+        name: "1 step down"
+        notes:  [Dd, Ad, Fd, Cd, Gd, Dd]
+        offset: [-1, -1, -1, -1, -1, -1]
+
+    "DropC":
+        name: "Drop C"
+        notes:  [D, A, F, C, G, C]
+        offset: [-2, -2, -2, -2, -2, -3]
 
 
 get_note_index = (note) ->
@@ -38,12 +54,9 @@ generateNotes = (sCount, fCount, tuning) ->
 
 module.exports = {
     getNoteGenerator
-    STANDART_TUNING
-    DROP_D_TUNING
-    ONE_STEP_DOWN
-    DROP_C_TUNING
     NOTES
     generateNotes
     get_note_index
     get_new_index
+    TUNINGS
 }
