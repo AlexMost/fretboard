@@ -198,12 +198,12 @@ Guitar = React.createClass
                     if x
                         selectorWidth = @state.selectorFretsCount * @props.fretWidth
                         fret_offset = @state.selector.initialPos.x + num * @props.fretWidth
-                        if fret_offset > x and fret_offset < x + selectorWidth + @props.fretWidth
+                        if fret_offset >= x and fret_offset < x + selectorWidth
                             active = "active-num"
                     (div
                         className: "col-md-1 fretnum #{active}"
                         style: {width: "#{@props.fretWidth}px"}
-                        num unless num is 0)
+                        num)
             )
 
         (div
