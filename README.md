@@ -10,7 +10,7 @@ Currently is under develop ...
 Project is open for your ideas and proposals
 
 ## Installation details
-To build and run this project locally you must have [node](http://nodejs.org/) and [grunt-cli](http://gruntjs.com/) installed.
+To build and run this project locally you must have installed [node](http://nodejs.org/), [grunt-cli](http://gruntjs.com/), [coffeescript](http://coffeescript.org/)
 
 * clone repo and **cd** to it
 * **npm install .**
@@ -19,9 +19,11 @@ To build and run this project locally you must have [node](http://nodejs.org/) a
 
 
 ## What is already done ?
-* Switching guitar scales (minor, major).
+* Switching guitar scales (minor, major, blues, pentatonic e.t.c.).
 * Displaying scale notes.
 * You can play selected notes on fretboard area from top to bottom and vice versa.
+* Selection of guitar tuning (standart, one step down, half step down, drop D, drop C)
+* Continiously playing selected scale notes. (Changing play direction configuration)
 
 Demo site - http://alexmost.github.io/fretboard/
 
