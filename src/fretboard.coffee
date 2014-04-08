@@ -179,6 +179,7 @@ Guitar = React.createClass
 
         StringsList = [0..@state.stringsNum].map (num) =>
             GString
+                key: "string_item_#{num}"
                 data:
                     frets: frets[num]
                 Fwidth: @props.fretWidth
@@ -201,6 +202,7 @@ Guitar = React.createClass
                         if fret_offset >= x and fret_offset < x + selectorWidth
                             active = "active-num"
                     (div
+                        key: "fret_num_#{num}"
                         className: "col-md-1 fretnum #{active}"
                         style: {width: "#{@props.fretWidth}px"}
                         num)
@@ -249,6 +251,7 @@ GString = React.createClass
         self = @
         make_fret = (fret) ->
             Fret
+                key: "fret_#{fret.data().sNum}#{fret.data().fNum}"
                 data: fret.data()
                 width: self.props.Fwidth
                 height: self.props.Fheight
