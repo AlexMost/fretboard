@@ -59,7 +59,8 @@ Guitar = React.createClass
         self = @
         play_iterator = ([sNum, fNum], cb) ->
             self.startPlayFret [sNum, fNum]
-            play_fret sNum, fNum, ->
+            tuningOffset = self.props.tuning.offset[sNum-1]
+            play_fret sNum, (parseInt(fNum) + tuningOffset), ->
                 setTimeout(
                     ->
                         self.setState {playing_fret: null}
@@ -142,7 +143,7 @@ Guitar = React.createClass
     onSelectorMove: (x) -> @setState {selectorX: x, is_playing: false}
 
     get_frets: ->
-        notesMap = generateNotes @state.stringsNum, @state.fretsNum, @props.tuning
+        notesMap = generateNotes @state.stringsNum, @state.fretsNum, @props.tuning.notes
         notes = (SCALES[@props.Scale].get_notes @props.Note)
         frets = getClearFrets @state.stringsNum, @state.fretsNum, notesMap
         selectorWidth = @state.selectorFretsCount * @props.fretWidth

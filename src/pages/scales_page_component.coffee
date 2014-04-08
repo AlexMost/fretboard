@@ -58,7 +58,7 @@ ScalesPage = React.createClass
                 selectorFretsCount: 4
                 Note: @state.Note
                 Scale: @state.Scale,
-                tuning: TUNINGS[@state.tuning].notes)
+                tuning: TUNINGS[@state.tuning])
         )
 
 module.exports = ScalesPage

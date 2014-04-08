@@ -72,7 +72,7 @@ SimpleDropdown = React.createClass
     render: ->
         self = @
         options = @props.options.map ([value, text]) ->
-            (li {},
+            (li {key: "opt_#{value}"},
                 (a {value, href: "#", onClick: self.itemClick}, text))
 
         openCls = if @state.isOpen then "open" else ""

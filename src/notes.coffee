@@ -9,9 +9,9 @@ TUNINGS =
         offset: [0, 0, 0, 0, 0, 0]
 
     "DropD":
-        name: "Drop D"
+        name: "Droped D"
         notes:  [E, B, G, D, A,  D]
-        offset: [0, 0, 0, 0, 0, -1]
+        offset: [0, 0, 0, 0, 0, -2]
 
     "1StepDown":
         name: "1 step down"
@@ -19,9 +19,9 @@ TUNINGS =
         offset: [-1, -1, -1, -1, -1, -1]
 
     "DropC":
-        name: "Drop C"
+        name: "Droped C"
         notes:  [D, A, F, C, G, C]
-        offset: [-2, -2, -2, -2, -2, -3]
+        offset: [-2, -2, -2, -2, -2, -4]
 
 
 get_note_index = (note) ->
