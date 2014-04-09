@@ -42,6 +42,8 @@ module.exports = (grunt) ->
         copy:
             js: {expand: true, cwd: 'public/min', src:'app.js', dest: 'dist/public'}
             main: {expand: true, src: 'index.html', dest: 'dist'}
+            about: {expand: true, src: 'about.html', dest: 'dist'}
+            feedback: {expand: true, src: 'feedback.html', dest: 'dist'}
             css: {expand: true, src: 'css/*', dest: 'dist'}
             resources: {expand: true, src: 'resources/**', dest: 'dist'}
             fonts: {expand: true, src: 'fonts/*', dest: 'dist'}
