@@ -69,7 +69,9 @@ Guitar = React.createClass
 
         tabs_to_play = @get_selected_frets()
 
-        load_iterator = ([sNum, fNum], cb) -> load_fret sNum, fNum, cb
+        load_iterator = ([sNum, fNum], cb) ->
+            tuningOffset = self.props.tuning.offset[sNum-1]
+            load_fret sNum, (parseInt(fNum) + tuningOffset), cb
 
         emitter.pub EVENT_SOUNDS_LOADING_START
         async.map tabs_to_play, load_iterator, ->
