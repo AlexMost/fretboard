@@ -18,7 +18,7 @@
     "grunt-gh-pages": "~0.9.1",
     "grunt-browserify": "^2.0.1",
     "grunt-notify": "^0.2.20",
-    "cheerio": "^0.14.0"
+    "cheerio": "^0.15.0"
   },
   "dependencies": {
     "react": "^0.10.0",
