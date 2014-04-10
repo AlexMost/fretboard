@@ -4,12 +4,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Fretboard</title>
+        <meta name="description" content="Generates guitar scale charts
+				      Minor, Major, Blues, Pentatonic."/>
+        <title>FretsMap. Guitar Scales. Minor, Major, Blues</title>
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
     </head>
     <body>
-        <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar navbar-default" role="navigation">
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,8 +20,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a href="./">
-                  <img src="resources/logo.png"/>
+              <a class="text-bold navbar-brand" style="font-size: 24px; color: #000" href="./">
+                  fretsMap
               </a>
             </div>
             <div class="collapse navbar-collapse">
@@ -32,10 +34,52 @@
         </div>
 
         <div class="container">
-            <h1>Guitar Scales</h1>
+            <h1>Scales generator</h1>
             <div data-rcomp="./lib-js/pages/scales_page_component" id="container">
             </div>
         </div>
+
+            <div class="container-fluid" style="margin-top: 80px">
+                <div class="text-muted row text-center" style="margin: auto; width: 700px; margin-bottom: 30px">
+                    leave your feedback <a href="./feedback.html">here</a>
+                </div>
+
+            <div class="row" style="margin: auto; width: 700px">
+
+                <div class="col-md-2">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="g-plusone" data-annotation="inline" data-width="300"></div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="fb-like" data-href="http://alexmost.github.io/fretboard/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+                </div>
+                </div>
+
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+            <script type="text/javascript">
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/platform.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        </div>
+
         <script type="text/javascript" src="public/app.js"></script>
     </body>
 </html>
