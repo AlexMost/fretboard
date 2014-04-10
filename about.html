@@ -4,12 +4,15 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Fretboard</title>
+        <meta name="description" content="Generates guitar scale charts
+				      Minor, Major, Blues, Pentatonic."/>
+        <title>About. FretsMap. Guitar Scales. Minor, Major, Blues.</title>
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
     </head>
     <body>
-        <div class="navbar navbar-inverse" role="navigation">
+
+        <div class="navbar navbar-default" role="navigation">
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,13 +21,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a href="./">
-                  <img src="resources/logo.png"/>
+              <a class="text-bold navbar-brand" style="font-size: 24px; color: #000" href="./">
+                  fretsMap
               </a>
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="./about.html">About</a></li>
+                <li><a class="active" href="./about.html">About</a></li>
                 <li><a href="./feedback.html">Feedback</a></li>
               </ul>
             </div><!--/.nav-collapse -->
@@ -33,7 +36,71 @@
 
         <div class="container">
             <h1>About</h1>
+            <div class="container">
+                <p class="lead p-indent-50">
+                    This project was created for research purposes for studying
+                    <a href="http://facebook.github.io/react/">Reactjs</a>.
+                    The main idea is taken from the resource
+                    <a href="http://www.scalerator.com/cgi-bin/sdispatch.py?optionsDisp=none&root=C&pattern=major&tuning=EADGBE&size=30">scalerator.com</a>.
+                    This project helps in studying scales and chords on the guitar.
+                    I added some useful features from my self such as playing selected
+                    part of fretboard notes, changing play direction and play repeat.
+                    Provided more detailed scale information (interval formulas).
+                    I am going to add another cool features to this project soon.
+                    So any feedback or contributing will be appreciated.
+                </p>
+                <p class="lead">
+                    All code is available on <a href="https://github.com/AlexMost/fretboard">github</a>.
+                </p>
+                <p class="lead">
+                    You may leave your feedback on <a href="./feedback.html">feedback page</a>
+                    or create an issue on <a href="https://github.com/AlexMost/fretboard/issues?state=open">github</a>.
+                </p>
+            </div>
 
+            <h2>Some technical info</h2>
+            <div class="container">
+            <p class="lead p-indent-50">
+                Scales generator is built on top of <a href="http://facebook.github.io/react/">reactjs</a>
+                framework. This my first react application and i really positively impressed.
+                You just working with your application state, and react cares about all
+                DOM modifications end other stuff.
+                It has a good documentation and community support.
+                One of the main advantages for me - was an ability to render components on the server-side.
+                If you will look at source page code <a href="http://alexmost.github.io/fretboard/">here</a> - then
+                you will see that the main component was already prerendered on the server, and that is really awesome.
+            </p>
+            <p class="lead p-indent-50">
+                All business logic and react components in application are written in coffeescript.
+                As for me, describing react's virtual dom in coffeescript's syntax looks like much better even than in jsx.
+            </p>
+            <p>
+                Look here at example:
+            </p>
+                <pre>
+React = require 'react'
+{div, span, button} = React.DOM
+
+MyComponent = React.createClass
+    render: ->
+        (div {className: "someClass"},
+             (span
+                 style: {color: "#000"},
+                 "Some Text"
+                 (button {name: "my-button"}, "button text")
+             )
+        )
+                </pre>
+<p class="lead p-indent-50">
+    Project is build with <a href="http://gruntjs.com/">Grunt</a> build system.
+    All modules are bundled with <a href="http://browserify.org/">browserify</a>.
+</p>
+
+<p class="lead p-indent-50">Suggestions and contributings are welcome =)</p>
+
+            <a href="https://twitter.com/MostovenkoA" class="twitter-follow-button" data-show-count="false">Follow @MostovenkoA</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
         </div>
     </body>
 </html>
