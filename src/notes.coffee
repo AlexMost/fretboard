@@ -9,7 +9,7 @@ TUNINGS =
         offset: [0, 0, 0, 0, 0, 0]
 
     "DropD":
-        name: "Droped D"
+        name: "Dropped D"
         notes:  [E, B, G, D, A,  D]
         offset: [0, 0, 0, 0, 0, -2]
 
@@ -19,7 +19,7 @@ TUNINGS =
         offset: [-1, -1, -1, -1, -1, -1]
 
     "DropC":
-        name: "Droped C"
+        name: "Dropped C"
         notes:  [D, A, F, C, G, C]
         offset: [-2, -2, -2, -2, -2, -4]
 
