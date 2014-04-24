@@ -1,5 +1,3 @@
-react_render_task = require './tasks/react_render'
-
 module.exports = (grunt) ->
     grunt.config.init
         coffee:
@@ -64,8 +62,6 @@ module.exports = (grunt) ->
                     message: 'Deployed to gh pages'
 
         react_render:
-            options:
-                basedir: __dirname
             index:
                 options:
                     src: "./dist/index.html"
@@ -87,10 +83,11 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks "grunt-contrib-copy"
     grunt.loadNpmTasks "grunt-contrib-cssmin"
     grunt.loadNpmTasks "grunt-contrib-concat"
+
     grunt.loadNpmTasks "grunt-gh-pages"
     grunt.loadNpmTasks "grunt-browserify"
     grunt.loadNpmTasks "grunt-notify"
-    react_render_task(grunt)
+    grunt.loadNpmTasks "grunt-react-render"
 
     grunt.registerTask "build", ["coffee", "browserify", "notify:build", "concat"]
     grunt.registerTask "deploy", ["build", "uglify", "cssmin", "copy", "react_render"]
